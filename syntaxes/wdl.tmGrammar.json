@@ -1,0 +1,204 @@
+{
+    "scopeName": "source.wdl",
+    "patterns": [
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#types"
+        },
+        {
+            "include": "#ident"
+        },
+        {
+            "include": "#string_quoted_single"
+        },
+        {
+            "include": "#string_quoted_double"
+        },
+        {
+            "include": "#heredoc"
+        },
+        {
+            "include": "#operators"
+        }
+    ],
+    "repository": {
+        "comment": {
+            "match": "#[^\\r\\n]*",
+            "name": "comment.line.number-sign.wdl"
+        },
+        "keywords": {
+            "match": "\\b(after|alias|as|call|command|else|false|hints|if|in|import|input|meta|None|null|object|output|parameter_meta|requirements|runtime|scatter|struct|task|then|true|version|workflow)\\b",
+            "name": "keyword.other.wdl"
+        },
+        "numbers": {
+            "match": "(0|([1-9][0-9]*)|(0[0-7]+)|(0[xX][0-9a-fA-F]+)|([0-9]+[eE][+-]?[0-9]+)|([0-9]+\\.[0-9]*([eE][+-]?[0-9]+)?)|([0-9]*\\.[0-9]+([eE][+-]?[0-9]+)?))",
+            "name": "constant.numeric.wdl"
+        },
+        "types": {
+            "match": "\\b(Array|Boolean|Directory|File|Float|Int|Map|Object|Pair|String)\\b",
+            "name": "entity.name.type.wdl"
+        },
+        "ident": {
+            "match": "\\b[a-zA-Z][a-zA-Z0-9_]*\\b",
+            "name": "variable.other.wdl"
+        },
+        "string_quoted_single": {
+            "name": "string.quoted.single.single-line.wdl",
+            "begin": "(')",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.begin.wdl"
+                }
+            },
+            "end": "(')",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.end.wdl"
+                },
+                "2": {
+                    "name": "invalid.illegal.unclosed-string.wdl"
+                }
+            },
+            "patterns": [
+                {
+                    "name": "constant.character.escape.wdl",
+                    "match": "\\\\'"
+                },
+                {
+                    "include": "#constant_placeholder"
+                },
+                {
+                    "include": "#escaped_char"
+                }
+            ]
+        },
+        "string_quoted_double": {
+            "name": "string.quoted.double.single-line.wdl",
+            "begin": "(\")",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.begin.wdl"
+                }
+            },
+            "end": "(\")",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.end.wdl"
+                },
+                "2": {
+                    "name": "invalid.illegal.unclosed-string.wdl"
+                }
+            },
+            "patterns": [
+                {
+                    "name": "constant.character.escape.wdl",
+                    "match": "\\\\\""
+                },
+                {
+                    "include": "#constant_placeholder"
+                },
+                {
+                    "include": "#escaped_char"
+                }
+            ]
+        },
+        "heredoc": {
+            "name": "string.unquoted.wdl",
+            "begin": "(<<<)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.begin.wdl"
+                }
+            },
+            "end": "(>>>)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.end.wdl"
+                },
+                "2": {
+                    "name": "invalid.illegal.unclosed-string.wdl"
+                }
+            },
+            "patterns": [
+                {
+                    "name": "constant.character.escape.wdl",
+                    "match": "\\\\>"
+                },
+                {
+                    "include": "#constant_placeholder"
+                }
+            ]
+        },
+        "constant_placeholder": {
+            "match": "[$~]{\\s*([a-zA-Z][a-zA-Z0-9_]*)\\s*}",
+            "name": "constant.other.placeholder.wdl"
+        },
+        "escaped_char": {
+            "match": "(\\\\x[0-9a-fA-F]{2})|(\\\\[0-7]{3})|(\\\\\n)|(\\\\\\\\)|(\\\\\")|(\\\\')|(\\\\a)|(\\\\b)|(\\\\f)|(\\\\n)|(\\\\r)|(\\\\t)|(\\\\v)",
+            "captures": {
+                "1": {
+                    "name": "constant.character.escape.hex.wdl"
+                },
+                "2": {
+                    "name": "constant.character.escape.octal.wdl"
+                },
+                "3": {
+                    "name": "constant.character.escape.newline.wdl"
+                },
+                "4": {
+                    "name": "constant.character.escape.backlash.wdl"
+                },
+                "5": {
+                    "name": "constant.character.escape.double-quote.wdl"
+                },
+                "6": {
+                    "name": "constant.character.escape.single-quote.wdl"
+                },
+                "7": {
+                    "name": "constant.character.escape.bell.wdl"
+                },
+                "8": {
+                    "name": "constant.character.escape.backspace.wdl"
+                },
+                "9": {
+                    "name": "constant.character.escape.formfeed.wdl"
+                },
+                "10": {
+                    "name": "constant.character.escape.linefeed.wdl"
+                },
+                "11": {
+                    "name": "constant.character.escape.return.wdl"
+                },
+                "12": {
+                    "name": "constant.character.escape.tab.wdl"
+                },
+                "13": {
+                    "name": "constant.character.escape.vertical-tab.wdl"
+                }
+            }
+        },
+        "escaped_unicode_char": {
+            "match": "(\\\\U[0-9A-Fa-f]{8})|(\\\\u[0-9A-Fa-f]{4})",
+            "captures": {
+                "1": {
+                    "name": "constant.character.escape.unicode.16-bit-hex.wdl"
+                },
+                "2": {
+                    "name": "constant.character.escape.unicode.32-bit-hex.wdl"
+                }
+            }
+        },
+        "operators": {
+            "match": "(=|\\?|!|\\+|-|\\|\\||&&|\\*|\\*\\*|\\/|%|==|!=|<=|<|>=|>|\\.)",
+            "name": "keyword.operator.wdl"
+        }
+    }
+}
