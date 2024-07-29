@@ -62,7 +62,7 @@ by setting the `sprocket.server.path` configuration option.
 - Syntax highlighting
 - Document and workspace diagnostics
 
-***More features will be added in the future.***
+**_More features will be added in the future._**
 
 ## Running The Development Extension
 
