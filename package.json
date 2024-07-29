@@ -23,8 +23,7 @@
   ],
   "preview": true,
   "main": "./out/extension.js",
-  "activationEvents": [
-  ],
+  "activationEvents": [],
   "contributes": {
     "languages": [
       {
@@ -43,7 +42,16 @@
       {
         "language": "wdl",
         "scopeName": "source.wdl",
-        "path": "./syntaxes/wdl.tmGrammar.json"
+        "path": "./syntaxes/wdl.tmGrammar.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.shellscript": "shellscript"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "wdl",
+        "path": "./snippets/wdl.code-snippets"
       }
     ],
     "commands": [
