@@ -1,7 +1,7 @@
 {
   "name": "sprocket-vscode",
   "displayName": "Sprocket",
-  "publisher": "StJudeRustLabs",
+  "publisher": "stjude-rust-labs",
   "description": "Workflow Definition Language (WDL) support for Visual Studio Code",
   "repository": {
     "type": "git",
