@@ -23,8 +23,7 @@
   ],
   "preview": true,
   "main": "./out/extension.js",
-  "activationEvents": [
-  ],
+  "activationEvents": [],
   "contributes": {
     "languages": [
       {
@@ -43,7 +42,16 @@
       {
         "language": "wdl",
         "scopeName": "source.wdl",
-        "path": "./syntaxes/wdl.tmGrammar.json"
+        "path": "./syntaxes/wdl.tmGrammar.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.shellscript": "shellscript"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "wdl",
+        "path": "./snippets/wdl.code-snippets"
       }
     ],
     "commands": [
@@ -105,5 +113,6 @@
     "@vscode/test-electron": "^2.4.0",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5"
-  }
+  },
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
