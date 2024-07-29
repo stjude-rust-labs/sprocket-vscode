@@ -1,0 +1,207 @@
+{
+    "Create a new struct": {
+        "prefix": "struct",
+        "body": [
+            "struct ${TM_SELECTED_TEXT:${1:MyStruct}} {",
+            "  ${2|Array,Boolean,Directory,File,Float,Int,Map,Object,Pair,String|} ${3:name}",
+            "}"
+        ],
+        "description": "Create a new struct"
+    },
+    "Create a new task": {
+        "prefix": "task",
+        "body": [
+            "task ${TM_SELECTED_TEXT:${1:my_task}} {",
+            "",
+            "  command <<<",
+            "    echo \"Hello, world!\"",
+            "  >>>",
+            "",
+            "  requirements {",
+            "    container: \"ubuntu:latest\"",
+            "  }",
+            "}"
+        ],
+        "description": "Create a new task"
+    },
+    "Create a new `meta` section": {
+        "prefix": "meta",
+        "body": [
+            "meta {",
+            "  description: \"${1: This is a description.}\"",
+            "}"
+        ],
+        "description": "Create a new `meta` section"
+    },
+    "Create a new `parameter_meta` section": {
+        "prefix": "parameter_meta",
+        "body": [
+            "parameter_meta {",
+            "}"
+        ],
+        "description": "Create a new `parameter_meta` section"
+    },
+    "Create a new `input` section": {
+        "prefix": "input",
+        "body": [
+            "input {",
+            "  ${1|Array,Boolean,Directory,File,Float,Int,Map,Object,Pair,String|} ${2:name}",
+            "}"
+        ],
+        "description": "Create a new `input` section"
+    },
+    "Create a new `output` section": {
+        "prefix": "output",
+        "body": [
+            "output {",
+            "  ${1|Array,Boolean,Directory,File,Float,Int,Map,Object,Pair,String|} ${2:name} = $0",
+            "}"
+        ],
+        "description": "Create a new `output` section"
+    },
+    "Create a new `requirements` section": {
+        "prefix": "requirements",
+        "body": [
+            "requirements {",
+            "  container: ${1:\"*\"}",
+            "  cpu: ${2:1}",
+            "  memory: ${3:\"2 GiB\"}",
+            "  gpu: ${4:false}",
+            "  fpga: ${5:false}",
+            "  disks: ${6:\"1 GiB\"}",
+            "  max_retries: ${7:0}",
+            "  return_codes: ${8:0}",
+            "}"
+        ],
+        "description": "Create a new `requirements` section"
+    },
+    "Create a new `runtime` section": {
+        "prefix": "runtime",
+        "body": [
+            "runtime {",
+            "  container: ${1:\"*\"}",
+            "  cpu: ${2:1}",
+            "  memory: ${3:\"2 GiB\"}",
+            "  gpu: ${4:false}",
+            "  fpga: ${5:false}",
+            "  disks: ${6:\"1 GiB\"}",
+            "  max_retries: ${7:0}",
+            "  return_codes: ${8:0}",
+            "}"
+        ],
+        "description": "Create a new `runtime` section"
+    },
+    "Create a new `hints` section": {
+        "prefix": "hints",
+        "body": [
+            "hints {",
+            "  max_cpu: ${1:32}",
+            "  max_memory: ${2:\"32 GiB\"}",
+            "  disks: ${3:\"500 GiB\"}",
+            "  gpu: ${4:0}",
+            "  fpga: ${5:0}",
+            "  short_task: ${6:false}",
+            "  localization_optional: ${7:false}",
+            "  # inputs: TODO (e.g., `input { name: hints { min_length: 3 } }`)",
+            "  # outputs: TODO (e.g., `output { name: hints { max_length: 5 } }`)",
+            "}"
+        ],
+        "description": "Create a new `hints` section"
+    },
+    "Create a new complete task": {
+        "prefix": "complete-task",
+        "body": [
+            "task ${TM_SELECTED_TEXT:${1:my_task}} {",
+            "  meta {",
+            "    description: \"${2:This task greets the name passed to the input.}\"",
+            "  }",
+            "",
+            "  parameter_meta {",
+            "    name: \"${3:The name to say 'hello' to.}\"",
+            "  }",
+            "",
+            "  input {",
+            "    String name",
+            "  }",
+            "",
+            "  command <<<",
+            "    echo \"Hello, \\${name}\"",
+            "  >>>",
+            "",
+            "  output {}",
+            "",
+            "  requirements {",
+            "    container: \"*\"",
+            "    cpu: 1",
+            "    memory: \"2 GiB\"",
+            "    gpu: false",
+            "    fpga: false",
+            "    disks: \"1 GiB\"",
+            "    max_retries: 0",
+            "    return_codes: 0",
+            "  }",
+            "",
+            "  hints {",
+            "    max_cpu: 32",
+            "    max_memory: \"32 GiB\"",
+            "    disks: \"500 GiB\"",
+            "    gpu: 0",
+            "    fpga: 0",
+            "    short_task: false",
+            "    localization_optional: false",
+            "    # inputs: TODO (e.g., `input { name: hints { min_length: 3 } }`)",
+            "    # outputs: TODO (e.g., `output { name: hints { max_length: 5 } }`)",
+            "  }",
+            "}"
+        ],
+        "description": "Create a new complete task"
+    },
+    "Create a new `call` statement": {
+        "prefix": "call",
+        "body": [ "call ${0:a_task} {}"],
+        "description": "Create a new `call` statement"
+    },
+    "Create a new `if` statement": {
+        "prefix": "if",
+        "body": [
+            "if (${1:foo}) {",
+            "  $0",
+            "}"
+        ],
+        "description": "Create a new `if` statement"
+    },
+    "Create a new `scatter` statement": {
+        "prefix": "scatter",
+        "body": [
+            "scatter (${1:foo} in ${2:foos}) {",
+            "  $0",
+            "}"
+        ],
+        "description": "Create a new `scatter` statement"
+    },
+    "Create a new workflow": {
+        "prefix": "workflow",
+        "body": [
+            "workflow ${TM_SELECTED_TEXT:${1:my_workflow}} {",
+            "",
+            "inputs {",
+            "  $1",
+            "}",
+            "",
+            "call ${2:a_task} {",
+            "  $3",
+            "}",
+            "",
+            "",
+            "outputs {",
+            "  $4",
+            "}",
+        ],
+        "description": "Create a new workflow"
+    },
+    "Create a new except comment": {
+        "prefix": "#@",
+        "body": ["#@ except: $0"],
+        "description": "Create a new except comment"
+    },
+}

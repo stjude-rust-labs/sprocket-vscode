@@ -1,0 +1,117 @@
+{
+  "name": "sprocket-vscode",
+  "displayName": "Sprocket",
+  "publisher": "StJudeRustLabs",
+  "description": "Workflow Definition Language (WDL) support for Visual Studio Code",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stjude-rust-labs/sprocket-vscode"
+  },
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "license": "SEE LICENSE IN LICENSE-APACHE",
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
+  "keywords": [
+    "WDL",
+    "Workflow Description Language",
+    "Bioinformatics"
+  ],
+  "preview": true,
+  "main": "./out/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "languages": [
+      {
+        "id": "wdl",
+        "extensions": [
+          ".wdl"
+        ],
+        "aliases": [
+          "WDL",
+          "Workflow Definition Language"
+        ],
+        "configuration": "./wdl-language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "wdl",
+        "scopeName": "source.wdl",
+        "path": "./syntaxes/wdl.tmGrammar.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.shellscript": "shellscript"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "wdl",
+        "path": "./snippets/wdl.code-snippets"
+      }
+    ],
+    "commands": [
+      {
+        "command": "sprocket.restartServer",
+        "title": "Restart Server",
+        "category": "Sprocket"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Sprocket",
+        "properties": {
+          "sprocket.server.path": {
+            "type": "string",
+            "markdownDescription": "The path to the `sprocket` command line tool; defaults to finding `sprocket` on your PATH."
+          },
+          "sprocket.server.outputLevel": {
+            "type": "string",
+            "markdownDescription": "Manages the output level of the Sprocket server",
+            "default": "Quiet",
+            "enum": [
+              "Verbose",
+              "Information",
+              "Quiet"
+            ],
+            "enumDescriptions": [
+              "The server will output all available information.",
+              "The server will output informational messages.",
+              "The server will only output error messages."
+            ]
+          },
+          "sprocket.server.lint": {
+            "type": "boolean",
+            "markdownDescription": "Passes the `--lint` flag to `sprocket`; this enables additional linting checks that are not enabled by default."
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p tsconfig.prod.json",
+    "watch": "tsc -watch -p tsconfig.json",
+    "pretest": "tsc -p tsconfig.json && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.91.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  }
+}
