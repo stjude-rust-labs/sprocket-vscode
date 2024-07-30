@@ -13,8 +13,12 @@ struct AStruct {
    String member
 }
 
-## # Here are some more
-## _double_ pound lines.
+# (These should not be markdown highlighted, as they are single number sign comments).
+#
+# **Here** are some more
+# _single_ pound lines.
+#
+# > And a quote
 
 task a_task {
    meta
@@ -22,6 +26,14 @@ task a_task {
    {
       # Here is a comment within `meta`.
       an_escaped_string: "bar \\ \n \t \' \" \~ \$ \000 \xFF \uFFFF \UFFFFFFFF"
+      a_string_with_placeholders: "${foo} ~{bar}"
+      a_multiline_string: <<<
+         ${some_placeholder}
+         this
+         spans
+         multiple
+         lines
+      >>>
       a_true: true
       a_false: false
       an_integer: 42
@@ -34,6 +46,8 @@ task a_task {
          subkey_four: false,
       }
       an_undefined_value: null
+      # The '2' at the end of this identifier shouldn't be highlighted as a numeric.
+      a_name_with_foo2: false
    }
 
    parameter_meta
@@ -66,6 +80,10 @@ task a_task {
       AStruct a_struct # This should not be higlighted, as it's not known within
                        # the TextMate language that it's a custom struct.
    }
+
+   command <<<
+      echo "Hello, ~{world}"
+   >>>
 
    output
    # Here is a comment before the output.

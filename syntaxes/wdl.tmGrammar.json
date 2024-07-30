@@ -2,46 +2,120 @@
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "WDL",
   "patterns": [
-    { "include": "#single-number-sign-comment" },
-    { "include": "#double-number-sign-comment" },
+    {
+      "include": "#single-number-sign-comment"
+    },
+    {
+      "include": "#double-number-sign-comment"
+    },
+    {
+      "comment": "version",
+      "name": "entity.version.wdl",
+      "match": "(version)\\s+(.*)",
+      "captures": {
+        "1": {
+          "name": "keyword.other.version.wdl"
+        },
+        "2": {
+          "name": "entity.version.number.wdl"
+        }
+      }
+    },
+    {
+      "comment": "structs",
+      "begin": "(struct)\\s+([A-Za-z][A-Za-z0-9_]+)?",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.struct.wdl"
+        },
+        "2": {
+          "name": "variable.name.struct.wdl"
+        }
+      },
+      "contentName": "entity.struct.wdl",
+      "end": "({)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.bracket.angle.struct-start.wdl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
+    },
     {
       "comment": "tasks",
-      "begin": "(task)\\s+([A-Za-z_]+)?",
+      "begin": "(task)\\s+([A-Za-z][A-Za-z0-9_]+)?",
       "beginCaptures": {
-        "1": { "name": "storage.type.task.wdl" },
-        "2": { "name": "variable.name.task.wdl" }
+        "1": {
+          "name": "storage.type.task.wdl"
+        },
+        "2": {
+          "name": "variable.name.task.wdl"
+        }
       },
       "contentName": "entity.task.wdl",
       "end": "({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.task-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.task-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     {
       "comment": "workflows",
-      "begin": "(workflow)\\s+([A-Za-z_]+)",
+      "begin": "(workflow)\\s+([A-Za-z][A-Za-z0-9_]+)",
       "beginCaptures": {
-        "1": { "name": "storage.type.workflow.wdl" },
-        "2": { "name": "variable.name.workflow.wdl" }
+        "1": {
+          "name": "storage.type.workflow.wdl"
+        },
+        "2": {
+          "name": "variable.name.workflow.wdl"
+        }
       },
       "end": "({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.workflow-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.workflow-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
-    { "include": "#input-block" },
-    { "include": "#command-block" },
-    { "include": "#output-block" },
-    { "include": "#requirements-block" },
-    { "include": "#hints-block" },
-    { "include": "#runtime-block" },
-    { "include": "#call-block" },
-    { "include": "#scatter-block" },
-    { "include": "#if-block" },
-    { "include": "#meta-block" },
-    { "include": "#parameter_meta-block" },
+    {
+      "include": "#input-block"
+    },
+    {
+      "include": "#command-block"
+    },
+    {
+      "include": "#output-block"
+    },
+    {
+      "include": "#requirements-block"
+    },
+    {
+      "include": "#hints-block"
+    },
+    {
+      "include": "#runtime-block"
+    },
+    {
+      "include": "#meta-block"
+    },
+    {
+      "include": "#parameter_meta-block"
+    },
     {
       "include": "#atom"
     }
@@ -49,43 +123,64 @@
   "repository": {
     "single-number-sign-comments": {
       "comment": "single number sign comments",
-      "name": "comment.block.documentation",
+      "name": "comment.line.number-sign.documentation",
       "begin": "(?:\\s*)(?:#(?!#))",
-      "while": "(?:^|\\G)(?:\\s*)(?:#(?!#))",
-      "patterns": [{ "include": "text.html.markdown" }]
+      "while": "(?:^|\\G)(?:\\s*)(?:#(?!#))"
     },
     "double-number-sign-comments": {
       "comment": "double number sign comments",
-      "name": "comment.block.documentation",
+      "name": "comment.line.double-number-sign.documentation",
       "begin": "(?:\\s*)(?:##) ?",
       "while": "(?:^|\\G)\\s*(?:##) ?",
-      "patterns": [{ "include": "text.html.markdown" }]
+      "patterns": [
+        {
+          "include": "text.html.markdown"
+        }
+      ]
     },
     "input-block": {
       "comment": "`input` blocks",
       "name": "entity.input-block.wdl",
       "begin": "(?:\\s*)(input)[?=\\s|{i]",
       "beginCaptures": {
-        "1": { "name": "keyword.other.input.wdl" }
+        "1": {
+          "name": "keyword.other.input.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.input-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.input-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "command-block": {
       "comment": "`command` blocks",
       "begin": "(?:\\s*)(command)\\s+(?:(<<<)|({))",
       "beginCaptures": {
-        "1": { "name": "storage.type.command.wdl" },
-        "2": { "name": "punctuation.heredoc.command-start.wdl" },
-        "3": { "name": "punctuation.bracket.angle.command-start.wdl" }
+        "1": {
+          "name": "storage.type.command.wdl"
+        },
+        "2": {
+          "name": "punctuation.heredoc.command-start.wdl"
+        },
+        "3": {
+          "name": "punctuation.bracket.angle.command-start.wdl"
+        }
       },
       "end": "(?:^|\\G)(?:\\s*)(?:(>>>)|(}))(?:\\s*)$",
       "endCaptures": {
-        "1": { "name": "punctuation.heredoc.command-end.wdl" },
-        "2": { "name": "punctuation.bracket.angle.command-end.wdl" }
+        "1": {
+          "name": "punctuation.heredoc.command-end.wdl"
+        },
+        "2": {
+          "name": "punctuation.bracket.angle.command-end.wdl"
+        }
       },
       "contentName": "meta.embedded.block.shellscript",
       "patterns": [
@@ -106,133 +201,138 @@
       "name": "entity.output-block.wdl",
       "begin": "(?:\\s*)(output)[?=\\s|{]",
       "beginCaptures": {
-        "1": { "name": "keyword.other.output.wdl" }
+        "1": {
+          "name": "keyword.other.output.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.output-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.output-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "requirements-block": {
       "comment": "`requirements` blocks",
       "name": "entity.requirements-block.wdl",
       "begin": "(?:\\s*)(requirements)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.requirements.wdl" }
+        "1": {
+          "name": "keyword.other.requirements.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.requirements-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.requirements-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "hints-block": {
       "comment": "`hints` blocks",
       "name": "entity.hints-block.wdl",
       "begin": "(?:\\s*)(hints)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.hints.wdl" }
+        "1": {
+          "name": "keyword.other.hints.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.hints-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.hints-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "runtime-block": {
       "comment": "`runtime` blocks",
       "name": "entity.runtime-block.wdl",
       "begin": "(?:\\s*)(runtime)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.runtime.wdl" }
+        "1": {
+          "name": "keyword.other.runtime.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.runtime-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.runtime-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
-    },
-    "call-block": {
-      "comment": "`call` blocks",
-      "name": "entity.call-block.wdl",
-      "begin": "(?:\\s*)(call)\\s+([A-Za-z0-9_]+)(?:\\s+(as)\\s+([A-Za-z0-9_]+))?",
-      "beginCaptures": {
-        "1": { "name": "keyword.other.call.wdl" },
-        "2": { "name": "variable.name" },
-        "3": { "name": "keyword.other.as.wdl" },
-        "4": { "name": "variable.name" }
-      },
-      "end": "(?:\\s*)({)",
-      "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.call-start.wdl" }
-      },
-      "patterns": [{ "include": "#atom" }]
-    },
-    "scatter-block": {
-      "comment": "`scatter` blocks",
-      "name": "entity.scatter-block.wdl",
-      "begin": "(?:\\s*)(scatter)\\s+(\\()?\\s*([A-Za-z0-9_]+)\\s+(in)\\s+([A-Za-z0-9_]+)\\s*(\\))?",
-      "beginCaptures": {
-        "1": { "name": "keyword.other.scatter.wdl" },
-        "2": { "name": "punctuation.bracket.curved.scatter-clause-start.wdl" },
-        "3": { "name": "variable.name.scatter-name.wdl" },
-        "4": { "name": "keyword.other.in.wdl" },
-        "5": { "name": "variable.name.scatter-over.wdl" },
-        "6": { "name": "punctuation.bracket.curved.scatter-clause-end.wdl" }
-      },
-      "end": "(?:\\s*)({)",
-      "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.scatter-start.wdl" }
-      },
-      "patterns": [{ "include": "#atom" }]
-    },
-    "if-block": {
-      "comment": "`if` blocks",
-      "name": "entity.if-block.wdl",
-      "begin": "(?:\\s*)(if)\\s+(\\()?",
-      "beginCaptures": {
-        "1": { "name": "keyword.other.if.wdl" },
-        "2": { "name": "punctuation.bracket.curved.if-clause-start.wdl" }
-      },
-      "contentName": "entity.if-clause.wdl",
-      "end": "\\s*(\\))?(?:\\s*)({)",
-      "endCaptures": {
-        "1": { "name": "punctuation.bracket.curved.if-clause-end.wdl" },
-        "2": { "name": "punctuation.bracket.angle.if-start.wdl" }
-      },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "meta-block": {
       "comment": "`meta` blocks",
       "name": "entity.meta-block.wdl",
       "begin": "(?:\\s*)(meta)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.meta.wdl" }
+        "1": {
+          "name": "keyword.other.meta.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.meta-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.meta-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "parameter_meta-block": {
       "comment": "`parameter_meta` blocks",
       "name": "entity.parameter_meta-block.wdl",
       "begin": "(?:\\s*)(parameter_meta)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.parameter_meta.wdl" }
+        "1": {
+          "name": "keyword.other.parameter_meta.wdl"
+        }
       },
       "end": "(?:\\s*)({)",
       "endCaptures": {
-        "1": { "name": "punctuation.bracket.angle.parameter_meta-start.wdl" }
+        "1": {
+          "name": "punctuation.bracket.angle.parameter_meta-start.wdl"
+        }
       },
-      "patterns": [{ "include": "#atom" }]
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
     },
     "strings": {
       "patterns": [
-        { "include": "#single-quoted-strings" },
-        { "include": "#double-quoted-strings" }
+        {
+          "include": "#single-quoted-strings"
+        },
+        {
+          "include": "#double-quoted-strings"
+        },
+        {
+          "include": "#multi-line-strings"
+        }
       ]
     },
     "single-quoted-strings": {
@@ -240,6 +340,9 @@
       "begin": "'",
       "end": "'",
       "patterns": [
+        {
+          "include": "#placeholder"
+        },
         {
           "include": "#escaped-character"
         }
@@ -250,6 +353,22 @@
       "begin": "\"",
       "end": "\"",
       "patterns": [
+        {
+          "include": "#placeholder"
+        },
+        {
+          "include": "#escaped-character"
+        }
+      ]
+    },
+    "multi-line-strings": {
+      "name": "string.unquoted.multi-line.wdl",
+      "begin": "<<<",
+      "end": ">>>",
+      "patterns": [
+        {
+          "include": "#placeholder"
+        },
         {
           "include": "#escaped-character"
         }
@@ -265,7 +384,10 @@
           "name": "storage.modifier.wdl",
           "match": "\\b(alias|as|in|scatter)\\b"
         },
-        { "name": "keyword.control.wdl", "match": "\\b(call|else|if|then)\\b" },
+        {
+          "name": "keyword.control.wdl",
+          "match": "\\b(call|else|if|then)\\b"
+        },
         {
           "name": "storage.type",
           "match": "\\b(command|hints|inputs|meta|object|outputs|parameter_meta|requirements|runtime|struct|task|workflow)\\b\\s*(?!:)"
@@ -289,30 +411,73 @@
       "name": "constant.numeric.wdl",
       "match": "-?(?:[0-9]+\\.[0-9]*(e|E)?|[0-9]+(e|E)?|[1-9][0-9]*|0[0-7]+|0[xX][0-9a-fA-F]|0)"
     },
+    "identity": {
+      "match": "\\b[A-Za-z][A-Za-z0-9_]*\\b",
+      "name": "variable.other.wdl"
+    },
     "escaped-character": {
       "name": "constant.character.escape.wdl",
       "match": "(\\\\\\\\)|(\\\\n)|(\\\\t)|(\\\\')|(\\\\\")|(\\\\~)|(\\\\\\$)|(\\\\[0-7]{3})|(\\\\x[0-9a-fA-F]{2})|(\\\\u[0-9a-fA-F]{4})|(\\\\U[0-9a-fA-F]{8})",
       "captures": {
-        "1": { "name": "constant.character.escape.backslash.wdl" },
-        "2": { "name": "constant.character.escape.newline.wdl" },
-        "3": { "name": "constant.character.escape.tab.wdl" },
-        "4": { "name": "constant.character.escape.single-quote.wdl" },
-        "5": { "name": "constant.character.escape.double-quote.wdl" },
-        "6": { "name": "constant.character.escape.tilde.wdl" },
-        "7": { "name": "constant.character.escape.dollar-sign.wdl" },
-        "8": { "name": "constant.character.escape.octal.wdl" },
-        "9": { "name": "constant.character.escape.hex.wdl" },
-        "10": { "name": "constant.character.escape.four-byte-unicode.wdl" },
-        "11": { "name": "constant.character.escape.eight-byte-unicode.wdl" }
+        "1": {
+          "name": "constant.character.escape.backslash.wdl"
+        },
+        "2": {
+          "name": "constant.character.escape.newline.wdl"
+        },
+        "3": {
+          "name": "constant.character.escape.tab.wdl"
+        },
+        "4": {
+          "name": "constant.character.escape.single-quote.wdl"
+        },
+        "5": {
+          "name": "constant.character.escape.double-quote.wdl"
+        },
+        "6": {
+          "name": "constant.character.escape.tilde.wdl"
+        },
+        "7": {
+          "name": "constant.character.escape.dollar-sign.wdl"
+        },
+        "8": {
+          "name": "constant.character.escape.octal.wdl"
+        },
+        "9": {
+          "name": "constant.character.escape.hex.wdl"
+        },
+        "10": {
+          "name": "constant.character.escape.four-byte-unicode.wdl"
+        },
+        "11": {
+          "name": "constant.character.escape.eight-byte-unicode.wdl"
+        }
       }
+    },
+    "placeholder": {
+      "match": "[$~]{\\s*([A-Za-z][A-Za-z0-9_]*)\\s*}",
+      "name": "constant.other.placeholder.wdl"
     },
     "atom": {
       "patterns": [
-        { "include": "#double-number-sign-comments" },
-        { "include": "#single-number-sign-comments" },
-        { "include": "#numeric" },
-        { "include": "#strings" },
-        { "include": "#keywords" }
+        {
+          "include": "#double-number-sign-comments"
+        },
+        {
+          "include": "#single-number-sign-comments"
+        },
+        {
+          "include": "#numeric"
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#identity"
+        }
       ]
     }
   },
