@@ -49,13 +49,13 @@ by setting the `sprocket.server.path` configuration option.
 
 ## 🎨 Features
 
-* **Basic syntax highlighting** using a complete and up-to-date [TextMate
+- **Basic syntax highlighting** using a complete and up-to-date [TextMate
   grammar](https://macromates.com/manual/en/language_grammars). _This grammar is slated
   to drive GitHub's syntax highlighting for WDL files [in a future
   release](https://github.com/github-linguist/linguist/pull/6972)_.
-* **Document and workspace diagnostics** courtesy of the language server protocol
+- **Document and workspace diagnostics** courtesy of the language server protocol
   implementation provided by`sprocket analyzer`.
-* **Code snippets** for common WDL constructs and conventions.
+- **Code snippets** for common WDL constructs and conventions.
 
 _**Note:** more features will be added as `sprocket` is developed. Please check out the
 activity on the [Sprocket repository](https://github.com/stjude-rust-labs/sprocket) to
@@ -120,7 +120,6 @@ yarn compile
 
 This command will automatically be run when you start the extension in the
 development environment or when packaging the extension.
-
 
 ## Running The Development Extension
 
