@@ -14,6 +14,8 @@
       <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" />
     </a>
     <br/>
+    <a href="https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode"><strong>Download »</strong></a>
+    ·
     <a href="https://stjude-rust-labs.github.io/sprocket/vscode/getting-started.html"><strong>Read the Docs »</strong></a>
     ·
     <a href="https://github.com/stjude-rust-labs/sprocket-vscode/issues/new?assignees=&labels=&template=feature_request.md&title=Descriptive%20Title&labels=enhancement"><strong>Request Feature »</strong></a>
@@ -26,13 +28,15 @@
 > [!NOTE]
 > The Sprocket Visual Studio Code extension is currently in very early development. As such, you currently have to download and install the latest version of the `sprocket` command line tool manually before running the extension. You may also experience various UX issues, such as needing to manually restart the Sprocket extension if it crashes. We plan to improve all of these things as we continue to iterate.
 
-## Overview
+## 🏠 Overview
 
 This extension provides support developing bioinformatics workflows via the <a
 href="https://openwdl.org/">Workflow Description Language</a>. It does this by
 leveraging the [`sprocket`](https://github.com/stjude-rust-labs/sprocket)
 command line tool (and, behind the scenes, the
 [`wdl`](https://github.com/stjude-rust-labs/wdl) family of crates).
+
+## 📚 Getting Started
 
 To get started, follow the instructions outlined in [the documentation](https://stjude-rust-labs.github.io/sprocket/vscode/getting-started.html).
 
@@ -144,7 +148,7 @@ Contributions, issues and feature requests are welcome! Feel free to check
 This project is licensed as either [Apache 2.0][license-apache] or
 [MIT][license-mit] at your discretion.
 
-Copyright © 2023-Present [St. Jude Children's Research Hospital](https://github.com/stjude).
+Copyright © 2024-Present [St. Jude Children's Research Hospital](https://github.com/stjude).
 
 [license-apache]: https://github.com/stjude-rust-labs/sprocket-vscode/blob/main/LICENSE-APACHE
 [license-mit]: https://github.com/stjude-rust-labs/sprocket-vscode/blob/main/LICENSE-MIT
