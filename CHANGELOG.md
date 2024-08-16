@@ -28,5 +28,5 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Add the initial implementation of the Sprocket extension.
+- Add the initial implementation of the Sprocket extension
   ([#1](https://github.com/stjude-rust-labs/sprocket-vscode/pull/1)).
