@@ -4,6 +4,9 @@
   </h1>
 
   <p align="center">
+    <a href="https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode">
+      <img src="https://vsmarketplacebadges.dev/version/stjude-rust-labs.sprocket-vscode.svg" alt="Visual Studio Marketplace">
+  </a>
     <a href="https://github.com/stjude-rust-labs/sprocket-vscode/blob/main/LICENSE-APACHE" target="_blank">
       <img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache 2.0-blue.svg" />
     </a>
@@ -11,6 +14,8 @@
       <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg" />
     </a>
     <br/>
+    <a href="https://stjude-rust-labs.github.io/sprocket/vscode/getting-started.html"><strong>Read the Docs »</strong></a>
+    ·
     <a href="https://github.com/stjude-rust-labs/sprocket-vscode/issues/new?assignees=&labels=&template=feature_request.md&title=Descriptive%20Title&labels=enhancement"><strong>Request Feature »</strong></a>
     ·
     <a href="https://github.com/stjude-rust-labs/sprocket-vscode/issues/new?assignees=&labels=&template=bug_report.md&title=Descriptive%20Title&labels=bug"><strong>Report Bug »</strong></a>
@@ -18,34 +23,18 @@
   </p>
 </p>
 
+> [!NOTE]
+> The Sprocket Visual Studio Code extension is currently in very early development. As such, you currently have to download and install the latest version of the `sprocket` command line tool manually before running the extension. You may also experience various UX issues, such as needing to manually restart the Sprocket extension if it crashes. We plan to improve all of these things as we continue to iterate.
+
 ## Overview
 
-This extension provides support for the <a href="https://openwdl.org/">Workflow
-Description Language</a>. Generally speaking, it does this by interacting with the
-[`sprocket`](https://github.com/stjude-rust-labs/sprocket) command line tool (and,
-behind the scenes, the [`wdl`](https://github.com/stjude-rust-labs/wdl) family of
-crates), though some functionality lives only within this extension.
+This extension provides support developing bioinformatics workflows via the <a
+href="https://openwdl.org/">Workflow Description Language</a>. It does this by
+leveraging the [`sprocket`](https://github.com/stjude-rust-labs/sprocket)
+command line tool (and, behind the scenes, the
+[`wdl`](https://github.com/stjude-rust-labs/wdl) family of crates).
 
-## Getting Started
-
-As this is an early version of both `sprocket` and this extension, you are required to
-install `sprocket` yourself and make it available on the `PATH` (future versions of
-this extension will automatically install and manage the `sprocket` binary for you).
-
-You can do so by running the following commands:
-
-```bash
-# (1) Ensure Rust is installed by following the instructions at https://rustup.rs.
-
-# (2) Install the latest version of `sprocket`.
-cargo install --git https://github.com/stjude-rust-labs/sprocket
-
-# (3) Make sure `sprocket` is accesible from the command line.
-sprocket --version
-```
-
-You should now be set! Alternatively, a path to the `sprocket` binary can be provided in the extension
-by setting the `sprocket.server.path` configuration option.
+To get started, follow the instructions outlined in [the documentation](https://stjude-rust-labs.github.io/sprocket/vscode/getting-started.html).
 
 ## 🎨 Features
 
@@ -61,17 +50,6 @@ _**Note:** more features will be added as `sprocket` is developed. Please check 
 activity on the [Sprocket repository](https://github.com/stjude-rust-labs/sprocket) to
 see what we're working on next!_
 
-## Known Issues
-
-- The extension is in an early stage of development and may not work as
-  expected.
-- The extension requires a separate installation of the `sprocket` command line
-  tool; in the future, the extension will automatically install the tool.
-- When `sprocket` unexpectedly terminates, the extension does not automatically
-  restart it and you must manually restart the extension host to recover from
-  the error; this will change in the future as the extension becomes more
-  stable.
-
 ## Configuration
 
 The extension provides the following configuration options:
@@ -82,6 +60,17 @@ The extension provides the following configuration options:
   running it.
 - `sprocket.server.lint`: Passes the `--lint` flag to `sprocket` when running
   it; this enables additional linting checks that are not enabled by default.
+
+## Known Issues
+
+- The extension is in an early stage of development and may not work as
+  expected.
+- The extension requires a separate installation of the `sprocket` command line
+  tool; in the future, the extension will automatically install the tool.
+- When `sprocket` unexpectedly terminates, the extension does not automatically
+  restart it and you must manually restart the extension host to recover from
+  the error; this will change in the future as the extension becomes more
+  stable.
 
 ## Development
 
@@ -121,13 +110,13 @@ yarn compile
 This command will automatically be run when you start the extension in the
 development environment or when packaging the extension.
 
-## Running The Development Extension
+### Running The Development Extension
 
 To run the extension, open this directory in VS Code and press `F5`.
 
 This will open a new VS Code window with the extension automatically loaded.
 
-## Installing The Extension
+### Installing The Extension
 
 To install the extension, you can package it as a `.vsix` file and install it.
 
@@ -144,3 +133,18 @@ vsce package --yarn
 ```
 
 This will generate a `sprocket-vscode-<version>.vsix` file that you can install in VS Code using the `Extensions: install from VSIX` command.
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome! Feel free to check
+[issues page](https://github.com/stjude-rust-labs/sprocket-vscode/issues).
+
+## 📝 License
+
+This project is licensed as either [Apache 2.0][license-apache] or
+[MIT][license-mit] at your discretion.
+
+Copyright © 2023-Present [St. Jude Children's Research Hospital](https://github.com/stjude).
+
+[license-apache]: https://github.com/stjude-rust-labs/sprocket-vscode/blob/main/LICENSE-APACHE
+[license-mit]: https://github.com/stjude-rust-labs/sprocket-vscode/blob/main/LICENSE-MIT
