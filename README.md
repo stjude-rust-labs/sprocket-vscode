@@ -1,8 +1,7 @@
-<p align="center">
-  <h1 align="center">
-  Sprocket VS Code Extension
-  </h1>
+<img style="margin: 0px" alt="Repository Header Image" src="./assets/repo-header.png" />
+<hr/>
 
+<p align="center">
   <p align="center">
     <a href="https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode">
       <img src="https://vsmarketplacebadges.dev/version/stjude-rust-labs.sprocket-vscode.svg" alt="Visual Studio Marketplace">
