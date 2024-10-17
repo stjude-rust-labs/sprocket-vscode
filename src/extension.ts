@@ -122,11 +122,15 @@ async function startServer() {
   let args = ["analyzer"];
   switch (outputLevel) {
     case "Verbose":
-      args.push("--verbose");
+      args.push("-vvv");
       break;
 
+    case "Information":
+        args.push("-vv");
+        break;
+
     case "Quiet":
-      args.push("--quiet");
+      args.push("-q");
       break;
   }
 
