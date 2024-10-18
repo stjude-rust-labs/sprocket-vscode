@@ -127,7 +127,7 @@ function formatDownloadUri(version: string): vscode.Uri | undefined {
       break;
 
     case "win32":
-      platform = "pc-windows-gnu";
+      platform = "pc-windows-msvc";
       extension = "zip";
       break;
 
@@ -325,13 +325,10 @@ async function getSprocketPath(
 
   let uri = formatDownloadUri(latestVersion);
   if (!uri) {
-    channel.appendLine(
-      "The current platform or architecture is not currently supported by Sprocket",
-    );
-    setStatus(
-      Status.Error,
-      "Failed to download Sprocket: unsupported platform",
-    );
+    const message =
+      "The current platform or architecture is not currently supported by Sprocket";
+    channel.appendLine(message);
+    setStatus(Status.Error, message);
     return installed?.path;
   }
 
@@ -440,7 +437,7 @@ async function startServer() {
 
   await client.start();
   channel.appendLine(
-    `Connected to sprocket LSP server version ${client.initializeResult?.serverInfo?.version}`,
+    `Connected to Sprocket LSP server version ${client.initializeResult?.serverInfo?.version}`,
   );
   setStatus(Status.Normal, "Sprocket is running");
 }

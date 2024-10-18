@@ -4,7 +4,7 @@
 <p align="center">
   <p align="center">
     <a href="https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode">
-      <img src="https://vsmarketplacebadges.dev/version/stjude-rust-labs.sprocket-vscode.svg" alt="Visual Studio Marketplace">
+      <img src="https://vsmarketplacebadges.dev/version/stjude-rust-labs.sprocket-vscode.png" alt="Visual Studio Marketplace">
   </a>
     <a href="https://github.com/stjude-rust-labs/sprocket-vscode/blob/main/LICENSE-APACHE" target="_blank">
       <img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache 2.0-blue.svg" />
