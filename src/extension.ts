@@ -5,13 +5,17 @@ import {
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
-import { ErrorAction, CloseAction, CancellationToken } from "vscode-languageclient";
+import {
+  ErrorAction,
+  CloseAction,
+  CancellationToken,
+} from "vscode-languageclient";
 import { getApi, FileDownloader } from "@microsoft/vscode-file-downloader-api";
 import "node-fetch";
 import path, { format } from "path";
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import * as tar from 'tar';
-import extract, {} from 'extract-zip';
+import * as tar from "tar";
+import extract from "extract-zip";
 
 const semver = require("semver");
 
@@ -22,7 +26,7 @@ let statusBar: vscode.StatusBarItem;
 
 interface Crate {
   name: string;
-  max_stable_version: string,
+  max_stable_version: string;
 }
 
 interface CratesApiResponse {
@@ -103,7 +107,6 @@ async function stopServer() {
   client = undefined;
 }
 
-
 function formatDownloadUri(version: string): vscode.Uri | undefined {
   let arch: string;
   switch (process.arch) {
@@ -141,7 +144,9 @@ function formatDownloadUri(version: string): vscode.Uri | undefined {
       return undefined;
   }
 
-  return vscode.Uri.parse(`https://github.com/stjude-rust-labs/sprocket/releases/download/v${version}/sprocket-v${version}-${arch}-${platform}.${extension}`);
+  return vscode.Uri.parse(
+    `https://github.com/stjude-rust-labs/sprocket/releases/download/v${version}/sprocket-v${version}-${arch}-${platform}.${extension}`,
+  );
 }
 
 async function decompressPackage(packagePath: string): Promise<void> {
@@ -155,7 +160,9 @@ async function decompressPackage(packagePath: string): Promise<void> {
   await tar.x({ f: packagePath, cwd: path.parse(packagePath).dir });
 }
 
-async function installSprocket(config: vscode.WorkspaceConfiguration): Promise<string | undefined> {
+async function installSprocket(
+  config: vscode.WorkspaceConfiguration,
+): Promise<string | undefined> {
   let sprocketPath = config.get<string>("path") || "";
   if (sprocketPath.length > 0) {
     return sprocketPath;
@@ -166,7 +173,10 @@ async function installSprocket(config: vscode.WorkspaceConfiguration): Promise<s
 
   // Check to see if we've previously downloaded sprocket
   try {
-    const packagePath = (await fileDownloader.getItem("sprocket-package", context as vscode.ExtensionContext));
+    const packagePath = await fileDownloader.getItem(
+      "sprocket-package",
+      context as vscode.ExtensionContext,
+    );
     let dir = path.parse(packagePath.fsPath).dir;
     sprocketPath = path.join(dir, "sprocket");
     if (process.platform === "win32") {
@@ -178,7 +188,9 @@ async function installSprocket(config: vscode.WorkspaceConfiguration): Promise<s
     } else {
       let versionPath = path.join(dir, "sprocket-package.version");
       existingVersion = readFileSync(versionPath).toString();
-      channel.appendLine(`Found previously downloaded Sprocket at \`${sprocketPath}\` (${existingVersion})`);
+      channel.appendLine(
+        `Found previously downloaded Sprocket at \`${sprocketPath}\` (${existingVersion})`,
+      );
     }
   } catch (e: any) {
     sprocketPath = "";
@@ -188,35 +200,63 @@ async function installSprocket(config: vscode.WorkspaceConfiguration): Promise<s
   // If we're missing sprocket or otherwise need to check for updates
   if (sprocketPath.length === 0 || config.get<boolean>("checkForUpdates")) {
     channel.appendLine("Checking for latest stable Sprocket crate version...");
-    const resp = await fetch("https://crates.io/api/v1/crates?q=sprocket&per_page=1", {
-      headers: { "User-Agent": "Sprocket VSCode extension (https://github.com/stjude-rust-labs/sprocket-vscode)" },
-    });
+    const resp = await fetch(
+      "https://crates.io/api/v1/crates?q=sprocket&per_page=1",
+      {
+        headers: {
+          "User-Agent":
+            "Sprocket VSCode extension (https://github.com/stjude-rust-labs/sprocket-vscode)",
+        },
+      },
+    );
 
     if (resp.status < 200 || resp.status >= 300) {
-      channel.appendLine(`Failed to query crates.io: a ${resp.status} was received`);
+      channel.appendLine(
+        `Failed to query crates.io: a ${resp.status} was received`,
+      );
       channel.appendLine(await resp.text());
-      setStatus(Status.Error, "Failed to query crates.io: see extension output for details");
+      setStatus(
+        Status.Error,
+        "Failed to query crates.io: see extension output for details",
+      );
       return undefined;
     }
 
-    const apiResponse = await resp.json() as CratesApiResponse;
-    const crate = apiResponse.crates.find((c => c.name === "sprocket"));
+    const apiResponse = (await resp.json()) as CratesApiResponse;
+    const crate = apiResponse.crates.find((c) => c.name === "sprocket");
     if (!crate) {
-      channel.appendLine("Failed to query crates.io: could not find sprocket crate in response");
-      setStatus(Status.Error, "Failed to query crates.io: see extension output for details");
+      channel.appendLine(
+        "Failed to query crates.io: could not find sprocket crate in response",
+      );
+      setStatus(
+        Status.Error,
+        "Failed to query crates.io: see extension output for details",
+      );
       return undefined;
     }
 
-    channel.appendLine(`Latest Sprocket release is ${crate.max_stable_version}`);
-    if (existingVersion && semver.lte(crate.max_stable_version, existingVersion)) {
-      channel.appendLine("Skipping update as previously downloaded Sprocket is newest available");
+    channel.appendLine(
+      `Latest Sprocket release is ${crate.max_stable_version}`,
+    );
+    if (
+      existingVersion &&
+      semver.lte(crate.max_stable_version, existingVersion)
+    ) {
+      channel.appendLine(
+        "Skipping update as previously downloaded Sprocket is newest available",
+      );
       return sprocketPath;
     }
 
     let uri = formatDownloadUri(crate.max_stable_version);
     if (!uri) {
-      channel.appendLine("The current platform or architecture is not currently supported by Sprocket");
-      setStatus(Status.Error, "Failed to download Sprocket: unsupported platform");
+      channel.appendLine(
+        "The current platform or architecture is not currently supported by Sprocket",
+      );
+      setStatus(
+        Status.Error,
+        "Failed to download Sprocket: unsupported platform",
+      );
       return undefined;
     }
 
@@ -236,13 +276,21 @@ async function installSprocket(config: vscode.WorkspaceConfiguration): Promise<s
 
     let packagePath: vscode.Uri;
     try {
-      packagePath = await vscode.window.withProgress<vscode.Uri>({
-        location: vscode.ProgressLocation.Window,
-        cancellable: true,
-        title: `Downloading Sprocket ${crate.max_stable_version}`
-      }, async (progress, token) => {
-        return await fileDownloader.downloadFile(uri, "sprocket-package", context as vscode.ExtensionContext, token);
-      });
+      packagePath = await vscode.window.withProgress<vscode.Uri>(
+        {
+          location: vscode.ProgressLocation.Window,
+          cancellable: true,
+          title: `Downloading Sprocket ${crate.max_stable_version}`,
+        },
+        async (progress, token) => {
+          return await fileDownloader.downloadFile(
+            uri,
+            "sprocket-package",
+            context as vscode.ExtensionContext,
+            token,
+          );
+        },
+      );
     } catch (e: any) {
       channel.appendLine(`Failed to download Sprocket: ${e.message}`);
       setStatus(Status.Error, `Failed to download Sprocket: ${e.message}`);
@@ -258,8 +306,13 @@ async function installSprocket(config: vscode.WorkspaceConfiguration): Promise<s
     }
 
     if (!existsSync(sprocketPath)) {
-      channel.appendLine("Failed to decompress Sprocket: sprocket executable does not exist");
-      setStatus(Status.Error, "Failed to decompress Sprocket: sprocket executable does not exist");
+      channel.appendLine(
+        "Failed to decompress Sprocket: sprocket executable does not exist",
+      );
+      setStatus(
+        Status.Error,
+        "Failed to decompress Sprocket: sprocket executable does not exist",
+      );
       return undefined;
     }
 
@@ -346,7 +399,9 @@ async function startServer() {
   );
 
   await client.start();
-  channel.appendLine(`Connected to sprocket LSP server version ${client.initializeResult?.serverInfo?.version}`);
+  channel.appendLine(
+    `Connected to sprocket LSP server version ${client.initializeResult?.serverInfo?.version}`,
+  );
   setStatus(Status.Normal, "Sprocket is running");
 }
 
