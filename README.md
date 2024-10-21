@@ -27,7 +27,7 @@
 > **NOTE**
 >
 > The Sprocket Visual Studio Code extension is currently in very early
-> development. You may also experience various user experience issues, such as
+> development. You may also experience various issues, such as
 > needing to manually restart the Sprocket extension if it crashes. We plan to
 > improve all of these things as we continue to develop the extension.
 
