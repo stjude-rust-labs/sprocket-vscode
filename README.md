@@ -24,16 +24,19 @@
   </p>
 </p>
 
-> [!NOTE]
-> The Sprocket Visual Studio Code extension is currently in very early development. As such, you currently have to download and install the latest version of the `sprocket` command line tool manually before running the extension. You may also experience various UX issues, such as needing to manually restart the Sprocket extension if it crashes. We plan to improve all of these things as we continue to iterate.
+> **NOTE**
+>
+> The Sprocket Visual Studio Code extension is currently in very early
+> development. You may also experience various user experience issues, such as
+> needing to manually restart the Sprocket extension if it crashes. We plan to
+> improve all of these things as we continue to develop the extension.
 
 ## 🏠 Overview
 
 This extension provides support developing bioinformatics workflows via the <a
 href="https://openwdl.org/">Workflow Description Language</a>. It does this by
 leveraging the [`sprocket`](https://github.com/stjude-rust-labs/sprocket)
-command line tool (and, behind the scenes, the
-[`wdl`](https://github.com/stjude-rust-labs/wdl) family of crates).
+command line tool (and the [`wdl`](https://github.com/stjude-rust-labs/wdl) family of crates).
 
 ## 📚 Getting Started
 
@@ -42,38 +45,39 @@ To get started, follow the instructions outlined in [the documentation](https://
 ## 🎨 Features
 
 - **Basic syntax highlighting** using a complete and up-to-date [TextMate
-  grammar](https://macromates.com/manual/en/language_grammars). _This grammar is slated
-  to drive GitHub's syntax highlighting for WDL files [in a future
-  release](https://github.com/github-linguist/linguist/pull/6972)_.
-- **Document and workspace diagnostics** courtesy of the language server protocol
-  implementation provided by`sprocket analyzer`.
+  grammar](https://macromates.com/manual/en/language_grammars). _This grammar
+  is slated to drive GitHub's syntax highlighting for WDL files [in a future release](https://github.com/github-linguist/linguist/pull/6972)_.
+- **Document and workspace diagnostics from static analysis** courtesy of the
+  language server protocol implementation provided by `sprocket analyzer`.
 - **Code snippets** for common WDL constructs and conventions.
 
-_**Note:** more features will be added as `sprocket` is developed. Please check out the
-activity on the [Sprocket repository](https://github.com/stjude-rust-labs/sprocket) to
-see what we're working on next!_
+_**Note:** more features will be added as `sprocket` is developed. Please check
+out the activity on the [Sprocket repository](https://github.com/stjude-rust-labs/sprocket)
+to see what we're working on next!_
 
 ## Configuration
 
 The extension provides the following configuration options:
 
-- `sprocket.server.path`: The path to the `sprocket` command line tool. By
-  default, the extension assumes that `sprocket` is on your PATH.
-- `sprocket.server.verbose`: Passes the `--verbose` flag to `sprocket` when
-  running it.
-- `sprocket.server.lint`: Passes the `--lint` flag to `sprocket` when running
-  it; this enables additional linting checks that are not enabled by default.
+- `sprocket.server.checkForUpdates`: Whether to check for updates to the
+  automatically installed `sprocket` tool when the extension starts.
+- `sprocket.server.path`: The path to the `sprocket` command line tool. Use
+  this to specify a custom installation of `sprocket`.
+- `sprocket.server.verbose`: Configures the verbosity of `sprocket` output.
+  Valid values are `Verbose`, `Information`, and `Quiet`; defaults to `Quiet`.
+- `sprocket.server.lint`: Passes the `--lint` flag to `sprocket`; this enables
+  additional linting checks that are not enabled by default.
 
 ## Known Issues
 
 - The extension is in an early stage of development and may not work as
   expected.
-- The extension requires a separate installation of the `sprocket` command line
-  tool; in the future, the extension will automatically install the tool.
 - When `sprocket` unexpectedly terminates, the extension does not automatically
   restart it and you must manually restart the extension host to recover from
   the error; this will change in the future as the extension becomes more
   stable.
+- A number of popular LSP features, such as "Go To Definition", are not yet
+  implemented.
 
 ## Development
 
