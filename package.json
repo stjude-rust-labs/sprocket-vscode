@@ -3,7 +3,7 @@
   "displayName": "Sprocket",
   "publisher": "stjude-rust-labs",
   "description": "Workflow Definition Language (WDL) support for Visual Studio Code",
-  "icon": "./assets/sprocket-logo-square.png",
+  "icon": "assets/sprocket-logo-square.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/stjude-rust-labs/sprocket-vscode"
@@ -66,9 +66,14 @@
       {
         "title": "Sprocket",
         "properties": {
+          "sprocket.server.checkForUpdates": {
+            "type": "boolean",
+            "markdownDescription": "Whether or not to check for updates to the latest stable Sprocket release when the extension starts.",
+            "default": true
+          },
           "sprocket.server.path": {
             "type": "string",
-            "markdownDescription": "The path to the `sprocket` command line tool; defaults to finding `sprocket` on your PATH."
+            "markdownDescription": "The path to a locally installed Sprocket; defaults to automatically installing the latest stable Sprocket."
           },
           "sprocket.server.outputLevel": {
             "type": "string",
@@ -101,7 +106,15 @@
     "lint": "eslint src --ext ts",
     "test": "vscode-test"
   },
+  "extensionDependencies": [
+    "mindaro-dev.file-downloader"
+  ],
   "dependencies": {
+    "@microsoft/vscode-file-downloader-api": "^1.0.1",
+    "extract-zip": "^2.0.1",
+    "node-fetch": "2",
+    "semver": "^7.6.3",
+    "tar": "^7.4.3",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
