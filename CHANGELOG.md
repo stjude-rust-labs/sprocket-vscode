@@ -8,6 +8,12 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 0.3.0 - 10-22-2024
+
+### Added
+
+- Added a feature to automatically install and update `sprocket` from GitHub ([#7](https://github.com/stjude-rust-labs/sprocket-vscode/pull/7)).
+
 ## 0.2.0 - 08-16-2024
 
 ### Revise
