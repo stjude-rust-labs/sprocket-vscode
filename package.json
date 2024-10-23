@@ -23,7 +23,7 @@
     "Bioinformatics"
   ],
   "preview": true,
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "activationEvents": [],
   "contributes": {
     "languages": [
@@ -99,12 +99,13 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p tsconfig.prod.json",
-    "watch": "tsc -watch -p tsconfig.json",
-    "pretest": "tsc -p tsconfig.json && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "compile": "yarn run check-types && node esbuild.js",
+    "check-types": "tsc --noEmit",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "vscode:prepublish": "yarn run package",
+    "package": "yarn run check-types && node esbuild.js --production"
   },
   "extensionDependencies": [
     "mindaro-dev.file-downloader"
@@ -125,6 +126,7 @@
     "@typescript-eslint/parser": "^7.11.0",
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.24.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "typescript": "^5.4.5"
