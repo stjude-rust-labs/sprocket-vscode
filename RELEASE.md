@@ -12,8 +12,9 @@ Unreleased` section).
       copy the notes from the `CHANGELOG.md` file.
 - [ ] Run `vsce package` from the root directory to build the package.
 - [ ] Run `vsce publish` from the root directory to build the package.
-  - You can navigate to https://dev.azure.com to generate a personal access
-    token when it asks for that.
+  - You can navigate to [the marketplace dashboard] to generate a personal
+    access token when it asks for that.
 - [ ] Ensure that the update successfully pushes to [the public download page].
 
+[the marketplace dashboard]: https://marketplace.visualstudio.com/manage
 [the public download page]: https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode
