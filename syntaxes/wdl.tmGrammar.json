@@ -390,7 +390,7 @@
         },
         {
           "name": "storage.type",
-          "match": "\\b(command|hints|inputs|meta|object|outputs|parameter_meta|requirements|runtime|struct|task|workflow)\\b\\s*(?!:)"
+          "match": "\\b(command|hints|inputs|meta|object|outputs|parameter_meta|requirements|runtime)\\b\\s*(?!:)"
         },
         {
           "name": "constant.language.wdl",
@@ -398,7 +398,7 @@
         },
         {
           "name": "keyword.wdl",
-          "match": "\\b(after|alias|as|call|command|else|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|struct|task|then|true|version|workflow)\\b\\s*(?!:)"
+          "match": "\\b(after|alias|as|call|command|else|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
         },
         {
           "name": "entity.name.type.wdl",
