@@ -1,16 +1,17 @@
+#@ except: CommentWhitespace, DeprecatedObject, DescriptionMissing
+#@ except: InputSorting, MatchingParameterMeta, NonmatchingOutput
+
 ## # Hello
 ## ## World
 ##
 ## This is some **bold** and `code` text.
 ##
-#@ except: CommentWhitespace, DeprecatedObject, DescriptionMissing
-#@ except: InputSorting, MatchingParameterMeta, NonmatchingOutput
 
 version 1.2
 
 #@ except: MissingMetas
 struct AStruct {
-   String member
+   String? member
 }
 
 # (These should not be markdown highlighted, as they are single number sign comments).
@@ -72,13 +73,15 @@ task a_task {
    input
    # Here is a comment before the input.
    {
-      Object an_object
-      String a_string
-      Boolean a_boolean
-      Int an_integer
-      Float a_float
-      AStruct a_struct # This should not be higlighted, as it's not known within
-                       # the TextMate language that it's a custom struct.
+      Object? an_object
+      String? a_string
+      Boolean? a_boolean
+      Int? an_integer
+      Float? a_float
+      String world = "world"
+      AStruct? a_struct # This should not be higlighted, as it's not known within
+                        # the TextMate language that it's a custom struct.
+      Boolean in
    }
 
    command <<<
@@ -88,7 +91,9 @@ task a_task {
    output
    # Here is a comment before the output.
    {
-      Object some_other_object = {}
+      Object some_other_object = object {
+         foo: "String"
+      }
       String some_other_string = "foo bar baz"
       Boolean some_other_boolean = true
       Int some_other_integer = 42
@@ -109,12 +114,17 @@ task a_task {
    {
       max_cpu: 1
    }
+}
 
-   runtime
-   # Here is a comment before the runtime.
-   {
-      container: "ubuntu:latest"
+task say_task {
+   input {
+      String greeting = "Hello"
+      String name
    }
+
+   command <<<
+       echo "~{greeting}, ~{name}"
+   >>>
 }
 
 workflow hello {
@@ -164,14 +174,14 @@ workflow hello {
       Float a_float
       AStruct a_struct # This should not be higlighted, as it's not known within
                        # the TextMate language that it's a custom struct.
+      Array[String] name_array = ["foo", "bar", "baz"]
+      Boolean some_condition_task = false
    }
 
-   call a_task as something {
-
-   }
+   call a_task as something {}
 
    scatter (name in name_array) {
-      call say_task { greeting = greeting }
+      call say_task { name }
    }
 
    if (some_condition_task) {
@@ -181,7 +191,7 @@ workflow hello {
    output
    # Here is a comment before the output.
    {
-      Object some_other_object = {}
+      Object some_other_object = object {}
       String some_other_string = "foo bar baz"
       Boolean some_other_boolean = true
       Int some_other_integer = 42
