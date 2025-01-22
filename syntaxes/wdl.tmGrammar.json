@@ -141,7 +141,7 @@
     "input-block": {
       "comment": "`input` blocks",
       "name": "entity.input-block.wdl",
-      "begin": "(?:\\s*)(input)[?=\\s|{i]",
+      "begin": "(?:\\s*)(input)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.input.wdl"
@@ -199,7 +199,7 @@
     "output-block": {
       "comment": "`output` blocks",
       "name": "entity.output-block.wdl",
-      "begin": "(?:\\s*)(output)[?=\\s|{]",
+      "begin": "(?:\\s*)(output)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.output.wdl"
@@ -220,7 +220,7 @@
     "requirements-block": {
       "comment": "`requirements` blocks",
       "name": "entity.requirements-block.wdl",
-      "begin": "(?:\\s*)(requirements)",
+      "begin": "(?:\\s*)(requirements)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.requirements.wdl"
@@ -241,7 +241,7 @@
     "hints-block": {
       "comment": "`hints` blocks",
       "name": "entity.hints-block.wdl",
-      "begin": "(?:\\s*)(hints)",
+      "begin": "(?:\\s*)(hints)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.hints.wdl"
@@ -262,7 +262,7 @@
     "runtime-block": {
       "comment": "`runtime` blocks",
       "name": "entity.runtime-block.wdl",
-      "begin": "(?:\\s*)(runtime)",
+      "begin": "(?:\\s*)(runtime)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.runtime.wdl"
@@ -283,7 +283,7 @@
     "meta-block": {
       "comment": "`meta` blocks",
       "name": "entity.meta-block.wdl",
-      "begin": "(?:\\s*)(meta)",
+      "begin": "(?:\\s*)(meta)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.meta.wdl"
@@ -304,7 +304,7 @@
     "parameter_meta-block": {
       "comment": "`parameter_meta` blocks",
       "name": "entity.parameter_meta-block.wdl",
-      "begin": "(?:\\s*)(parameter_meta)",
+      "begin": "(?:\\s*)(parameter_meta)\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.parameter_meta.wdl"
