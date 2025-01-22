@@ -398,7 +398,7 @@
         },
         {
           "name": "keyword.wdl",
-          "match": "\\b(after|alias|as|call|command|else|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
+          "match": "\\b(after|alias|as|call|command|else|env|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
         },
         {
           "name": "entity.name.type.wdl",
