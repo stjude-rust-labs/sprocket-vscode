@@ -16,6 +16,7 @@ import path, { format } from "path";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import * as tar from "tar";
 import extract from "extract-zip";
+import { generateParameterMeta } from "./commands/generateParameterMeta"; //imported from commands
 
 const semver = require("semver");
 
@@ -86,6 +87,10 @@ function registerCommands(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("sprocket.restartServer", restartServer),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("sprocket.generateParameterMeta", generateParameterMeta)
   );
 }
 
