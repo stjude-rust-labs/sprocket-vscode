@@ -13,6 +13,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added a feature to automatically install and update `sprocket` from GitHub ([#7](https://github.com/stjude-rust-labs/sprocket-vscode/pull/7)).
+- Added automatic retry (1 attempt) for Sprocket language server on unexpected termination
 
 ## 0.2.0 - 08-16-2024
 
