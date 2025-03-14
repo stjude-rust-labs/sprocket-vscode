@@ -8,10 +8,14 @@
 
 version 1.2
 
+imp
+
 #@ except: MissingMetas
 struct AStruct {
    String member
 }
+
+workflow my_workflow {}
 
 # (These should not be markdown highlighted, as they are single number sign comments).
 #
