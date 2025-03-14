@@ -8,11 +8,10 @@ import {
 import {
   ErrorAction,
   CloseAction,
-  CancellationToken,
 } from "vscode-languageclient";
 import { getApi, FileDownloader } from "@microsoft/vscode-file-downloader-api";
 import "node-fetch";
-import path, { format } from "path";
+import path from "path";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import * as tar from "tar";
 import extract from "extract-zip";
