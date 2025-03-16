@@ -78,6 +78,11 @@ The extension provides the following configuration options:
   stable.
 - A number of popular LSP features, such as "Go To Definition", are not yet
   implemented.
+- On some Linux systems, the pre-compiled Sprocket binary may not be compatible with the system's GLIBC version.
+  If you encounter this issue, you can:
+  1. Install Sprocket manually using: `cargo install sprocket`
+  2. Set `sprocket.server.path` in VS Code settings to point to your manually installed binary (usually `~/.cargo/bin/sprocket`)
+  3. Or choose "Use system Sprocket" when prompted during installation
 
 ## Development
 
