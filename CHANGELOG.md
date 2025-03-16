@@ -8,6 +8,12 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+- Improved handling of GLIBC version incompatibility on Linux systems ([#23](https://github.com/stjude-rust-labs/sprocket-vscode/issues/23))
+  - Added better error messages and guidance for manual installation
+  - Added options to use system-installed Sprocket when pre-compiled binary is incompatible
+  - Updated documentation with troubleshooting steps
+
 ## 0.3.0 - 10-22-2024
 
 ### Added

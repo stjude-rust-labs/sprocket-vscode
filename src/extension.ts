@@ -346,18 +346,49 @@ async function getSprocketPath(
     const userResponse = await vscode.window.showInformationMessage(
       `Sprocket needs to be installed. ${latestVersion} is the latest available.`,
       "Download and install",
+      "Use system Sprocket",
+      "Install manually"
     );
 
     if (!userResponse) {
-      // Fall back to looking for `sprocket` on the PATH
+      return "sprocket";
+    }
+
+    if (userResponse === "Use system Sprocket") {
+      return "sprocket";
+    }
+
+    if (userResponse === "Install manually") {
+      const message = "To install Sprocket manually:\n" +
+        "1. Run: cargo install sprocket\n" +
+        "2. Set sprocket.server.path in VS Code settings to the binary path\n" +
+        "   (usually ~/.cargo/bin/sprocket)";
+      
+      vscode.window.showInformationMessage(message);
+      channel.appendLine(message);
       return "sprocket";
     }
   }
 
   channel.appendLine(`Installing Sprocket from ${uri}`);
-  return (
-    (await installSprocket(downloader, uri, latestVersion)) || installed?.path
-  );
+  try {
+    const exePath = await installSprocket(downloader, uri, latestVersion);
+    if (exePath) {
+      return exePath;
+    }
+  } catch (error: any) {
+    const errorMessage = error.message || "";
+    if (errorMessage.includes("GLIBC") || errorMessage.includes("libc.so")) {
+      const message = "The pre-compiled Sprocket binary is not compatible with your system's GLIBC version.\n" +
+        "Please install Sprocket manually using: cargo install sprocket";
+      vscode.window.showErrorMessage(message);
+      channel.appendLine(message);
+      return "sprocket";
+    }
+    throw error;
+  }
+
+  return installed?.path || "sprocket";
 }
 
 async function startServer() {
