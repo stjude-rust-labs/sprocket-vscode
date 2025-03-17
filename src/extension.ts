@@ -415,8 +415,7 @@ async function startServer() {
           };
         }
 
-        // We will retry atleast once if sprocket was initialized.
-        // Can we add a configuration property to allow for more retries?
+        // We will retry at least once if sprocket was initialized.
         crashReports++;
         if (crashReports <= 1) {
           setStatus(Status.Working, "Sprocket has terminated. Restarting...");
