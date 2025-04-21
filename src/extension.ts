@@ -8,11 +8,12 @@ import {
 import {
   ErrorAction,
   CloseAction,
-  CancellationToken,
+  ResponseError,
+  InitializeError,
 } from "vscode-languageclient";
 import { getApi, FileDownloader } from "@microsoft/vscode-file-downloader-api";
 import "node-fetch";
-import path, { format } from "path";
+import path from "path";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import * as tar from "tar";
 import extract from "extract-zip";
@@ -23,6 +24,8 @@ let context: vscode.ExtensionContext | undefined;
 let client: LanguageClient | undefined;
 let channel: vscode.OutputChannel;
 let statusBar: vscode.StatusBarItem;
+let initializationError: ResponseError<InitializeError> | undefined = undefined;
+let crashReports = 0;
 
 enum Status {
   Normal,
@@ -91,11 +94,20 @@ function registerCommands(context: vscode.ExtensionContext) {
 
 async function stopServer() {
   if (!client) {
-    return undefined;
+    channel.appendLine("No client to stop");
+    return;
   }
 
-  await client.stop();
-  client = undefined;
+  try {
+    if (client.needsStop() && client.isRunning()) {
+      await client.stop();
+    }
+  } catch (e: any) {
+    channel.appendLine(`Error stopping server: ${e.message}`);
+  } finally {
+    await client.dispose();
+    client = undefined;
+  }
 }
 
 function formatDownloadUri(version: string): vscode.Uri | undefined {
@@ -379,18 +391,50 @@ async function startServer() {
   let clientOptions: LanguageClientOptions = {
     documentSelector: [{ scheme: "file", language: "wdl" }],
     outputChannel: channel,
+    initializationFailedHandler: (error: ResponseError<InitializeError> | Error | any) => {
+      initializationError = error;
+      setStatus(Status.Error, "Failed to initialize Spocket language-service. Please check your configuration settings and reload this window.");
+      return false;
+    },
     errorHandler: {
       error: (error, message, count) => {
         return {
-          action: ErrorAction.Continue,
+          action: ErrorAction.Shutdown,
           message: `Sprocket encountered an error: ${error}`,
           handled: false,
         };
       },
-      closed: () => {
-        setStatus(Status.Error, `Sprocket has terminated`);
+      closed: async () => {
+        if (initializationError !== undefined) {
+          channel.appendLine("Initialization error: " + initializationError.message);
+          return {
+            action: CloseAction.DoNotRestart,
+            // This won't show an error dialog to the user,
+            // allowing us to display a custom error later.
+            message: "",
+          };
+        }
 
-        // TODO: implement retry logic if sprocket was initialized.
+        // We will retry at least once if sprocket was initialized.
+        crashReports++;
+        if (crashReports <= 1) {
+          setStatus(Status.Working, "Sprocket has terminated. Restarting...");
+          channel.appendLine("Attempting restart...");
+          try {
+            await restartServer();
+            channel.appendLine("Successfully restarted Sprocket");
+            return {
+              action: CloseAction.DoNotRestart,
+              handled: true,
+            };
+          } catch (e: any) {
+            channel.appendLine(`Restart failed: ${e.message}`);
+          }
+        }
+
+        // this was not an initialization error, so we don't know what went wrong yet
+        // stop attempting to restart
+        setStatus(Status.Error, `Sprocket has terminated`);
         return {
           action: CloseAction.DoNotRestart,
           message: "Sprocket has terminated",
@@ -443,12 +487,13 @@ async function startServer() {
 }
 
 async function restartServer() {
-  await stopServer();
-
+  channel.appendLine("Restarting Sprocket server...");
   try {
+    await stopServer();
     await startServer();
   } catch (e: any) {
-    setStatus(Status.Error, `Failed to activate start server: ${e.message}`);
+    channel.appendLine(`Failed to restart Sprocket server: ${e.message}`);
+    setStatus(Status.Error, `Failed to restart Sprocket: ${e.message}`);
     throw e;
   }
 }

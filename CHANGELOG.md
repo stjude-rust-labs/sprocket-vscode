@@ -8,6 +8,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- Added automatic retry for Sprocket language server on unexpected termination.
+
 ## 0.3.0 - 10-22-2024
 
 ### Added
