@@ -10,7 +10,7 @@
   },
   "version": "0.3.0",
   "engines": {
-    "vscode": "^1.91.0"
+    "vscode": "^1.98.0"
   },
   "license": "SEE LICENSE IN LICENSE-APACHE",
   "categories": [
@@ -60,6 +60,11 @@
         "command": "sprocket.restartServer",
         "title": "Restart Server",
         "category": "Sprocket"
+      },
+      {
+        "command": "sprocket.simulateCrash",
+        "title": "Simulate Server Crash",
+        "category": "Sprocket"
       }
     ],
     "configuration": [
@@ -93,6 +98,13 @@
           "sprocket.server.lint": {
             "type": "boolean",
             "markdownDescription": "Passes the `--lint` flag to `sprocket`; this enables additional linting checks that are not enabled by default."
+          },
+          "sprocket.server.maxRetries": {
+            "type": "number",
+            "default": 5,
+            "minimum": 0,
+            "markdownDescription": "Maximum number of times to attempt restarting the Sprocket server after termination. Set to 0 to disable automatic restarts.",
+            "scope": "window"
           }
         }
       }
@@ -121,7 +133,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
-    "@types/vscode": "^1.91.0",
+    "@types/vscode": "^1.98.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
     "@vscode/test-cli": "^0.0.9",

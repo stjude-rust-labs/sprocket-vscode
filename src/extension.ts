@@ -4,12 +4,11 @@ import {
   LanguageClientOptions,
   ServerOptions,
   TransportKind,
-} from "vscode-languageclient/node";
-import {
   ErrorAction,
   CloseAction,
-  CancellationToken,
-} from "vscode-languageclient";
+  ResponseError,
+  InitializeError,
+} from "vscode-languageclient/node";
 import { getApi, FileDownloader } from "@microsoft/vscode-file-downloader-api";
 import "node-fetch";
 import path, { format } from "path";
@@ -23,6 +22,17 @@ let context: vscode.ExtensionContext | undefined;
 let client: LanguageClient | undefined;
 let channel: vscode.OutputChannel;
 let statusBar: vscode.StatusBarItem;
+let initializationError: ResponseError<InitializeError> | undefined = undefined;
+let crashReports = 0;
+let maxRetries = 1;
+let clientOptions: LanguageClientOptions;
+
+function resetCrashReports(): void {
+  crashReports = 0;
+  if (channel) {
+    channel.appendLine("Reset crash reports counter");
+  }
+}
 
 enum Status {
   Normal,
@@ -86,6 +96,23 @@ function registerCommands(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("sprocket.restartServer", restartServer),
+  );
+
+  // Add debug command to simulate crash
+  context.subscriptions.push(
+    vscode.commands.registerCommand("sprocket.simulateCrash", async () => {
+      if (client) {
+        channel.appendLine("Simulating Sprocket server crash...");
+        await client.stop();
+        client = undefined;
+        const closedHandler = clientOptions.errorHandler?.closed;
+        if (closedHandler) {
+          await closedHandler();
+        }
+      } else {
+        channel.appendLine("No running Sprocket server to crash");
+      }
+    })
   );
 }
 
@@ -368,6 +395,12 @@ async function startServer() {
   const config = vscode.workspace.getConfiguration("sprocket.server");
   const outputLevel = config.get<string>("outputLevel") || "Quiet";
   const lint = config.get<boolean>("lint") || false;
+  
+  // Update maxRetries from configuration with logging
+  const configuredMaxRetries = config.get<number>("maxRetries");
+  channel.appendLine(`Raw maxRetries from config in startServer: ${configuredMaxRetries}`);
+  maxRetries = configuredMaxRetries !== undefined ? Math.max(0, configuredMaxRetries) : 5;
+  channel.appendLine(`Maximum retry attempts set to: ${maxRetries}`);
 
   let sprocketPath = await getSprocketPath(config);
   if (!sprocketPath) {
@@ -376,7 +409,7 @@ async function startServer() {
 
   setStatus(Status.Working, "Starting Sprocket...");
 
-  let clientOptions: LanguageClientOptions = {
+  clientOptions = {
     documentSelector: [{ scheme: "file", language: "wdl" }],
     outputChannel: channel,
     errorHandler: {
@@ -387,15 +420,36 @@ async function startServer() {
           handled: false,
         };
       },
-      closed: () => {
-        setStatus(Status.Error, `Sprocket has terminated`);
-
-        // TODO: implement retry logic if sprocket was initialized.
-        return {
-          action: CloseAction.DoNotRestart,
-          message: "Sprocket has terminated",
-          handled: false,
-        };
+      closed: async () => {
+        crashReports++;
+        channel.appendLine(`Server terminated (attempt ${crashReports}/${maxRetries + 1})`);
+        
+        if (crashReports <= maxRetries) {
+          channel.appendLine(`Attempting restart (${crashReports}/${maxRetries})...`);
+          try {
+            await restartServer();
+            return {
+              action: CloseAction.Restart,
+              message: "Sprocket server restarted",
+              handled: true,
+            };
+          } catch (e: any) {
+            channel.appendLine(`Failed to restart server: ${e.message}`);
+            return {
+              action: CloseAction.DoNotRestart,
+              message: "Failed to restart Sprocket server",
+              handled: true,
+            };
+          }
+        } else {
+          channel.appendLine(`Server terminated after ${maxRetries} retry attempts.`);
+          setStatus(Status.Error, "Sprocket server terminated");
+          return {
+            action: CloseAction.DoNotRestart,
+            message: "Maximum retry attempts reached",
+            handled: true,
+          };
+        }
       },
     },
   };
@@ -443,28 +497,41 @@ async function startServer() {
 }
 
 async function restartServer() {
-  await stopServer();
-
+  channel.appendLine("Restarting Sprocket server...");
   try {
+    await stopServer();
     await startServer();
   } catch (e: any) {
-    setStatus(Status.Error, `Failed to activate start server: ${e.message}`);
+    channel.appendLine(`Failed to restart Sprocket server: ${e.message}`);
+    setStatus(Status.Error, `Failed to restart Sprocket: ${e.message}`);
     throw e;
   }
 }
 
 async function tryActivate(context: vscode.ExtensionContext) {
   channel = vscode.window.createOutputChannel("Sprocket");
-  context.subscriptions.push(channel);
   channel.appendLine("Sprocket extension is initializing...");
+
+  statusBar = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Left,
+    100,
+  );
+  statusBar.command = "sprocket.showChannel";
+  statusBar.show();
 
   registerCommands(context);
 
-  statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-  context.subscriptions.push(statusBar);
-  statusBar.text = "Sprocket";
-  statusBar.command = "sprocket.showChannel";
-  statusBar.show();
+  // Reset crash reports on activation
+  resetCrashReports();
+
+  // Get the maxRetries configuration with detailed logging
+  const config = vscode.workspace.getConfiguration("sprocket.server");
+  const configuredMaxRetries = config.get<number>("maxRetries");
+  channel.appendLine(`Raw maxRetries from config: ${configuredMaxRetries}`);
+  
+  // Use the configured value or fall back to package.json default
+  maxRetries = configuredMaxRetries !== undefined ? Math.max(0, configuredMaxRetries) : 1;
+  channel.appendLine(`Final maxRetries value: ${maxRetries}`);
 
   vscode.workspace.onDidChangeConfiguration(onDidChangeConfiguration);
 
@@ -479,12 +546,20 @@ async function onDidChangeConfiguration(
   event: vscode.ConfigurationChangeEvent,
 ) {
   if (event.affectsConfiguration("sprocket.server")) {
+    // Update maxRetries if it was changed
+    const config = vscode.workspace.getConfiguration("sprocket.server");
+    const configuredMaxRetries = config.get<number>("maxRetries");
+    channel.appendLine(`Raw maxRetries from config in onDidChangeConfiguration: ${configuredMaxRetries}`);
+    maxRetries = configuredMaxRetries !== undefined ? Math.max(0, configuredMaxRetries) : 5;
+    channel.appendLine(`Updated maximum retry attempts to: ${maxRetries}`);
+
     const userResponse = await vscode.window.showInformationMessage(
       "Changing server options requires a Sprocket server restart",
       "Restart now",
     );
 
     if (userResponse) {
+      resetCrashReports();
       const command = "sprocket.restartServer";
       await vscode.commands.executeCommand(command);
     }
