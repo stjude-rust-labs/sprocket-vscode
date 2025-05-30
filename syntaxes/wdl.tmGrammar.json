@@ -182,14 +182,17 @@
       "contentName": "meta.embedded.block.shellscript",
       "patterns": [
         {
-          "begin": "(^|\\G)(\\s*)(.*)",
-          "while": "(^|\\G)(?!\\s*(})\\s*$)",
-          "contentName": "meta.embedded.block.shellscript",
+          "name": "meta.bracket.angle.inner",
+          "begin": "{",
+          "end": "}",
           "patterns": [
             {
-              "include": "source.shell"
+              "include": "$self"
             }
           ]
+        },
+        {
+          "include": "source.shell"
         }
       ]
     },
@@ -213,14 +216,17 @@
       "contentName": "meta.embedded.block.shellscript",
       "patterns": [
         {
-          "begin": "(^|\\G)(\\s*)(.*)",
-          "while": "(^|\\G)(?!\\s*(>>>)\\s*$)",
-          "contentName": "meta.embedded.block.shellscript",
+          "name": "meta.brace.command",
+          "begin": "<<<",
+          "end": ">>>",
           "patterns": [
             {
-              "include": "source.shell"
+              "include": "$self"
             }
           ]
+        },
+        {
+          "include": "source.shell"
         }
       ]
     },
