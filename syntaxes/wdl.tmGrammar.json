@@ -515,8 +515,6 @@
       ]
     }
   },
-  "fileTypes": [
-    "wdl"
-  ],
+  "fileTypes": ["wdl"],
   "scopeName": "source.wdl"
 }
