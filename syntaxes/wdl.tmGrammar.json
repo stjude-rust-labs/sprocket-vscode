@@ -3,10 +3,10 @@
   "name": "wdl",
   "patterns": [
     {
-      "include": "#single-number-sign-comment"
+      "include": "#single-number-sign-comments"
     },
     {
-      "include": "#double-number-sign-comment"
+      "include": "#double-number-sign-comments"
     },
     {
       "comment": "version",
@@ -144,7 +144,7 @@
     "input-block": {
       "comment": "`input` blocks",
       "name": "entity.input-block.wdl",
-      "begin": "(?:\\s*)(input)\b",
+      "begin": "(?:\\s*)(input)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.input.wdl"
@@ -173,26 +173,16 @@
           "name": "punctuation.bracket.curly.command-start.wdl"
         }
       },
-      "end": "(?:^|\\G)(?:\\s*)(})(?:\\s*)$",
+      "end": "^(?:\\s*)(})(?:\\s*)$",
       "endCaptures": {
         "1": {
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "meta.embedded.block.shellscript",
+      "contentName": "string.command.template.shellscript",
       "patterns": [
         {
-          "name": "meta.bracket.curly.inner",
-          "begin": "{",
-          "end": "}",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "include": "source.shell"
+          "include": "#placeholder"
         }
       ]
     },
@@ -207,33 +197,23 @@
           "name": "punctuation.heredoc.command-start.wdl"
         }
       },
-      "end": "(?:^|\\G)(?:\\s*)(>>>)(?:\\s*)$",
+      "end": "^(?:\\s*)(>>>)(?:\\s*)$",
       "endCaptures": {
         "1": {
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "meta.embedded.block.shellscript",
+      "contentName": "string.command.template.shellscript",
       "patterns": [
         {
-          "name": "meta.brace.command",
-          "begin": "<<<",
-          "end": ">>>",
-          "patterns": [
-            {
-              "include": "$self"
-            }
-          ]
-        },
-        {
-          "include": "source.shell"
+          "include": "#placeholder"
         }
       ]
     },
     "output-block": {
       "comment": "`output` blocks",
       "name": "entity.output-block.wdl",
-      "begin": "(?:\\s*)(output)\b",
+      "begin": "(?:\\s*)(output)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.output.wdl"
@@ -254,7 +234,7 @@
     "requirements-block": {
       "comment": "`requirements` blocks",
       "name": "entity.requirements-block.wdl",
-      "begin": "(?:\\s*)(requirements)\b",
+      "begin": "(?:\\s*)(requirements)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.requirements.wdl"
@@ -275,7 +255,7 @@
     "hints-block": {
       "comment": "`hints` blocks",
       "name": "entity.hints-block.wdl",
-      "begin": "(?:\\s*)(hints)\b",
+      "begin": "(?:\\s*)(hints)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.hints.wdl"
@@ -296,7 +276,7 @@
     "runtime-block": {
       "comment": "`runtime` blocks",
       "name": "entity.runtime-block.wdl",
-      "begin": "(?:\\s*)(runtime)\b",
+      "begin": "(?:\\s*)(runtime)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.runtime.wdl"
@@ -317,7 +297,7 @@
     "meta-block": {
       "comment": "`meta` blocks",
       "name": "entity.meta-block.wdl",
-      "begin": "(?:\\s*)(meta)\b",
+      "begin": "(?:\\s*)(meta)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.meta.wdl"
@@ -338,7 +318,7 @@
     "parameter_meta-block": {
       "comment": "`parameter_meta` blocks",
       "name": "entity.parameter_meta-block.wdl",
-      "begin": "(?:\\s*)(parameter_meta)\b",
+      "begin": "(?:\\s*)(parameter_meta)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.other.parameter_meta.wdl"
@@ -489,8 +469,14 @@
       }
     },
     "placeholder": {
-      "match": "[$~]{\\s*([A-Za-z][A-Za-z0-9_]*)\\s*}",
-      "name": "constant.other.placeholder.wdl"
+      "begin": "[$~]{",
+      "end": "}",
+      "name": "meta.other.placeholder.wdl",
+      "patterns": [
+        {
+          "include": "source.wdl"
+        }
+      ]
     },
     "atom": {
       "patterns": [
