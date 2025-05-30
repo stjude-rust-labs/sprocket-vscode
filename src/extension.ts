@@ -391,9 +391,14 @@ async function startServer() {
   let clientOptions: LanguageClientOptions = {
     documentSelector: [{ scheme: "file", language: "wdl" }],
     outputChannel: channel,
-    initializationFailedHandler: (error: ResponseError<InitializeError> | Error | any) => {
+    initializationFailedHandler: (
+      error: ResponseError<InitializeError> | Error | any,
+    ) => {
       initializationError = error;
-      setStatus(Status.Error, "Failed to initialize Spocket language-service. Please check your configuration settings and reload this window.");
+      setStatus(
+        Status.Error,
+        "Failed to initialize Spocket language-service. Please check your configuration settings and reload this window.",
+      );
       return false;
     },
     errorHandler: {
@@ -406,7 +411,9 @@ async function startServer() {
       },
       closed: async () => {
         if (initializationError !== undefined) {
-          channel.appendLine("Initialization error: " + initializationError.message);
+          channel.appendLine(
+            "Initialization error: " + initializationError.message,
+          );
           return {
             action: CloseAction.DoNotRestart,
             // This won't show an error dialog to the user,
