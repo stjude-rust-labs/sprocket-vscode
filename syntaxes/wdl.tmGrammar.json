@@ -36,7 +36,7 @@
       "end": "({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.struct-start.wdl"
+          "name": "punctuation.bracket.curly.struct-start.wdl"
         }
       },
       "patterns": [
@@ -60,7 +60,7 @@
       "end": "({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.task-start.wdl"
+          "name": "punctuation.bracket.curly.task-start.wdl"
         }
       },
       "patterns": [
@@ -83,7 +83,7 @@
       "end": "({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.workflow-start.wdl"
+          "name": "punctuation.bracket.curly.workflow-start.wdl"
         }
       },
       "patterns": [
@@ -96,7 +96,7 @@
       "include": "#input-block"
     },
     {
-      "include": "#command-block-angle"
+      "include": "#command-block-curly"
     },
     {
       "include": "#command-block-heredoc"
@@ -153,7 +153,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.input-start.wdl"
+          "name": "punctuation.bracket.curly.input-start.wdl"
         }
       },
       "patterns": [
@@ -162,27 +162,27 @@
         }
       ]
     },
-    "command-block-angle": {
-      "comment": "angle brace `command` blocks",
+    "command-block-curly": {
+      "comment": "curly bracket `command` blocks",
       "begin": "(?:\\s*)(command)\\s+({)",
       "beginCaptures": {
         "1": {
           "name": "storage.type.command.wdl"
         },
         "2": {
-          "name": "punctuation.bracket.angle.command-start.wdl"
+          "name": "punctuation.bracket.curly.command-start.wdl"
         }
       },
       "end": "(?:^|\\G)(?:\\s*)(})(?:\\s*)$",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.command-end.wdl"
+          "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
       "contentName": "meta.embedded.block.shellscript",
       "patterns": [
         {
-          "name": "meta.bracket.angle.inner",
+          "name": "meta.bracket.curly.inner",
           "begin": "{",
           "end": "}",
           "patterns": [
@@ -210,7 +210,7 @@
       "end": "(?:^|\\G)(?:\\s*)(>>>)(?:\\s*)$",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.command-end.wdl"
+          "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
       "contentName": "meta.embedded.block.shellscript",
@@ -242,7 +242,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.output-start.wdl"
+          "name": "punctuation.bracket.curly.output-start.wdl"
         }
       },
       "patterns": [
@@ -263,7 +263,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.requirements-start.wdl"
+          "name": "punctuation.bracket.curly.requirements-start.wdl"
         }
       },
       "patterns": [
@@ -284,7 +284,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.hints-start.wdl"
+          "name": "punctuation.bracket.curly.hints-start.wdl"
         }
       },
       "patterns": [
@@ -305,7 +305,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.runtime-start.wdl"
+          "name": "punctuation.bracket.curly.runtime-start.wdl"
         }
       },
       "patterns": [
@@ -326,7 +326,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.meta-start.wdl"
+          "name": "punctuation.bracket.curly.meta-start.wdl"
         }
       },
       "patterns": [
@@ -347,7 +347,7 @@
       "end": "(?:\\s*)({)",
       "endCaptures": {
         "1": {
-          "name": "punctuation.bracket.angle.parameter_meta-start.wdl"
+          "name": "punctuation.bracket.curly.parameter_meta-start.wdl"
         }
       },
       "patterns": [
@@ -515,6 +515,8 @@
       ]
     }
   },
-  "fileTypes": ["wdl"],
+  "fileTypes": [
+    "wdl"
+  ],
   "scopeName": "source.wdl"
 }
