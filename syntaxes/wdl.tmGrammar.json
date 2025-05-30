@@ -96,7 +96,10 @@
       "include": "#input-block"
     },
     {
-      "include": "#command-block"
+      "include": "#command-block-angle"
+    },
+    {
+      "include": "#command-block-heredoc"
     },
     {
       "include": "#output-block"
@@ -159,26 +162,20 @@
         }
       ]
     },
-    "command-block": {
-      "comment": "`command` blocks",
-      "begin": "(?:\\s*)(command)\\s+(?:(<<<)|({))",
+    "command-block-angle": {
+      "comment": "angle brace `command` blocks",
+      "begin": "(?:\\s*)(command)\\s+({)",
       "beginCaptures": {
         "1": {
           "name": "storage.type.command.wdl"
         },
         "2": {
-          "name": "punctuation.heredoc.command-start.wdl"
-        },
-        "3": {
           "name": "punctuation.bracket.angle.command-start.wdl"
         }
       },
-      "end": "(?:^|\\G)(?:\\s*)(?:(>>>)|(}))(?:\\s*)$",
+      "end": "(?:^|\\G)(?:\\s*)(})(?:\\s*)$",
       "endCaptures": {
         "1": {
-          "name": "punctuation.heredoc.command-end.wdl"
-        },
-        "2": {
           "name": "punctuation.bracket.angle.command-end.wdl"
         }
       },
@@ -186,7 +183,38 @@
       "patterns": [
         {
           "begin": "(^|\\G)(\\s*)(.*)",
-          "while": "(^|\\G)(?!\\s*(?:(>>>)|(}))\\s*$)",
+          "while": "(^|\\G)(?!\\s*(})\\s*$)",
+          "contentName": "meta.embedded.block.shellscript",
+          "patterns": [
+            {
+              "include": "source.shell"
+            }
+          ]
+        }
+      ]
+    },
+    "command-block-heredoc": {
+      "comment": "heredoc `command` blocks",
+      "begin": "(?:\\s*)(command)\\s+(<<<)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.command.wdl"
+        },
+        "2": {
+          "name": "punctuation.heredoc.command-start.wdl"
+        }
+      },
+      "end": "(?:^|\\G)(?:\\s*)(>>>)(?:\\s*)$",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.bracket.angle.command-end.wdl"
+        }
+      },
+      "contentName": "meta.embedded.block.shellscript",
+      "patterns": [
+        {
+          "begin": "(^|\\G)(\\s*)(.*)",
+          "while": "(^|\\G)(?!\\s*(>>>)\\s*$)",
           "contentName": "meta.embedded.block.shellscript",
           "patterns": [
             {
