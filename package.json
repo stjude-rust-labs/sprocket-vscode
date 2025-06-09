@@ -36,6 +36,10 @@
           "WDL",
           "Workflow Definition Language"
         ],
+        "icon": {
+          "light": "./assets/icon.png",
+          "dark": "./assets/icon.png"
+        },
         "configuration": "./wdl-language-configuration.json"
       }
     ],
