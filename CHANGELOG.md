@@ -8,15 +8,24 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 0.4.0 - 08-12-2025
+
 ### Added
 
 - Added automatic retry for Sprocket language server on unexpected termination.
+
+### Fixed
+
+- Rolls back syntax highlighting in `command` blocks to represent multi-line
+  template strings
+  ([#32](https://github.com/stjude-rust-labs/sprocket-vscode/pull/32))
 
 ## 0.3.0 - 10-22-2024
 
 ### Added
 
-- Added a feature to automatically install and update `sprocket` from GitHub ([#7](https://github.com/stjude-rust-labs/sprocket-vscode/pull/7)).
+- Added a feature to automatically install and update `sprocket` from GitHub
+  ([#7](https://github.com/stjude-rust-labs/sprocket-vscode/pull/7)).
 
 ## 0.2.0 - 08-16-2024
 
@@ -32,7 +41,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Multiple updates to the `README.md` and instructions on how to get set up
   using the Sprocket VS Code extension
   ([`295f100`](https://github.com/stjude-rust-labs/sprocket-vscode/commit/295f100194dc577daf044978b562a60ab5e728ae)
-  and [`c65a65f`](https://github.com/stjude-rust-labs/sprocket-vscode/commit/c65a65f2fd1768d12ae6c6814b6daf29a60311a7)).
+  and
+  [`c65a65f`](https://github.com/stjude-rust-labs/sprocket-vscode/commit/c65a65f2fd1768d12ae6c6814b6daf29a60311a7)).
 
 ## 0.1.0 - 07-29-2024
 
