@@ -53,12 +53,6 @@
         }
       }
     ],
-    "snippets": [
-      {
-        "language": "wdl",
-        "path": "./snippets/wdl.code-snippets"
-      }
-    ],
     "commands": [
       {
         "command": "sprocket.restartServer",
