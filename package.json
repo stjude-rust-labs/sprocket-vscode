@@ -64,6 +64,11 @@
         "command": "sprocket.restartServer",
         "title": "Restart Server",
         "category": "Sprocket"
+      },
+      {
+        "command": "sprocket.generateParameterMeta",
+        "title": "Generate parameter_meta Block",
+        "category": "Sprocket"
       }
     ],
     "configuration": [
