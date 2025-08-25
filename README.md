@@ -24,7 +24,7 @@
   </p>
 </p>
 
-> **NOTE**
+> [!NOTE]
 >
 > The Sprocket Visual Studio Code extension is currently in very early
 > development. You may also experience various issues, such as
