@@ -69,12 +69,15 @@ function setStatus(status: Status, message: string) {
 }
 
 export async function activate(ctx: vscode.ExtensionContext) {
+  ctx.subscriptions.push(configureLanguage());
   context = ctx;
   await tryActivate(ctx).catch((err) => {
     context = undefined;
     setStatus(
       Status.Error,
-      `Failed to activate Sprocket extension: ${err.message ?? "see extension output for details"}`,
+      `Failed to activate Sprocket extension: ${
+        err.message ?? "see extension output for details"
+      }`,
     );
     throw err;
   });
@@ -541,4 +544,29 @@ async function onDidChangeConfiguration(
       await vscode.commands.executeCommand(command);
     }
   }
+}
+
+/**
+ * Sets up additional language configuration that's impossible to do via a
+ * separate language-configuration.json file. See [1] for more information.
+ *
+ * [1]: https://github.com/Microsoft/vscode/issues/11514#issuecomment-244707076
+ */
+function configureLanguage(): vscode.Disposable {
+  return vscode.languages.setLanguageConfiguration("wdl", {
+    onEnterRules: [
+      {
+        // Preamble doc single-line comment
+        // e.g. ##|
+        beforeText: /^\s*##.*$/,
+        action: { indentAction: vscode.IndentAction.None, appendText: "## " },
+      },
+      {
+        // Single-line comment
+        // e.g. #|
+        beforeText: /^\s*#.*$/,
+        action: { indentAction: vscode.IndentAction.None, appendText: "# " },
+      },
+    ],
+  });
 }
