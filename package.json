@@ -103,7 +103,8 @@
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
     "vscode:prepublish": "yarn run package",
-    "package": "yarn run check-types && node esbuild.js --production"
+    "package": "yarn run check-types && node esbuild.js --production",
+    "format": "npx prettier . --write"
   },
   "extensionDependencies": [
     "mindaro-dev.file-downloader"
