@@ -8,6 +8,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- Added onEnter rules for document and preamble comments.
+
+
 ## 0.4.0 - 08-12-2025
 
 ### Added
