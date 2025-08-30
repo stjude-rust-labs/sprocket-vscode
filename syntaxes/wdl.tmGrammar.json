@@ -516,6 +516,9 @@
           "include": "#bash-strings"
         },
         {
+          "include": "#bash-arithmetic"
+        },
+        {
           "include": "#bash-variables"
         },
         {
@@ -646,6 +649,40 @@
           }
         }
       ]
+    },
+    "bash-arithmetic": {
+      "name": "meta.arithmetic.shell",
+      "begin": "(\\(\\()",
+      "end": "(\\)\\))",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.section.arithmetic.double.shell"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.arithmetic.double.shell"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "include": "#bash-arithmetic-operators"
+        },
+        {
+          "include": "#bash-numeric"
+        }
+      ]
+    },
+    "bash-arithmetic-operators": {
+      "name": "keyword.operator.arithmetic.shell",
+      "match": "\\*\\*|==|!=|<=|>=|&&|\\|\\||<<|>>|[!~+\\-*/%<>&|^=]"
+    },
+    "bash-numeric": {
+      "name": "constant.numeric.shell",
+      "match": "\\b(0[xX][0-9a-fA-F]+|\\d+)\\b"
     }
   },
   "fileTypes": ["wdl"],
