@@ -510,6 +510,9 @@
       "comment": "custom bash highlighting",
       "patterns": [
         {
+          "include": "#placeholder"
+        },
+        {
           "include": "#bash-comments"
         },
         {
@@ -537,22 +540,25 @@
         }
       ]
     },
-    "bash-single-qouted-strings": {
-      "name": "string.quoted.single.bash",
+    "bash-single-quoted-strings": {
+      "name": "string.quoted.single.shell",
       "begin": "'",
       "end": "'"
     },
-    "bash-double-qouted-strings": {
-      "name": "string.quoted.double.bash",
+    "bash-double-quoted-strings": {
+      "name": "string.quoted.double.shell",
       "begin": "\"",
       "end": "\"",
       "patterns": [
+        {
+          "include": "#placeholder"
+        },
         {
           "include": "#bash-variables"
         },
         {
           "name": "constant.character.escape.shell",
-          "match": "\\\\([\"`\\\\\\r\\n])"
+          "match": "\\\\([\"$`\\\\\\r\\n])"
         }
       ]
     },
