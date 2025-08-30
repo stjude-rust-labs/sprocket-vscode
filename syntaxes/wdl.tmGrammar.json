@@ -517,6 +517,9 @@
         },
         {
           "include": "#bash-variables"
+        },
+        {
+          "include": "#bash-keywords"
         }
       ]
     },
@@ -582,6 +585,18 @@
         {
           "name": "variable.parameter.special.shell",
           "match": "\\$(0-9@*#?$$!_])"
+        }
+      ]
+    },
+    "bash-keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.shell",
+          "match": "\\b(if|then|else|fi|for|in|while|do|done|case|esac|until|select)\\b"
+        },
+        {
+          "name": "support.function.builtin.shell",
+          "match": "\\b(echo|set|unset|export|readonly|shift|source|local|declare|getopts|read|let)\\b"
         }
       ]
     }
