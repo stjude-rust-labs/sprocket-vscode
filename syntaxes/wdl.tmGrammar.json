@@ -179,10 +179,13 @@
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "string.command.template.shellscript",
+      "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
           "include": "#placeholder"
+        },
+        {
+          "include": "#bash-in-wdl"
         }
       ]
     },
@@ -203,10 +206,13 @@
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "string.command.template.shellscript",
+      "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
           "include": "#placeholder"
+        },
+        {
+          "include": "#bash-in-wdl"
         }
       ]
     },
@@ -497,6 +503,85 @@
         },
         {
           "include": "#identity"
+        }
+      ]
+    },
+    "bash-in-wdl": {
+      "comment": "custom bash highlighting",
+      "patterns": [
+        {
+          "include": "#bash-comments"
+        },
+        {
+          "include": "#bash-strings"
+        },
+        {
+          "include": "#bash-variables"
+        }
+      ]
+    },
+    "bash-comments": {
+      "name": "comment.line.number-sign.shell",
+      "match": "#.*$"
+    },
+    "bash-strings": {
+      "patterns": [
+        {
+          "include": "#bash-single-quoted-strings"
+        },
+        {
+          "include": "#bash-double-quoted-strings"
+        }
+      ]
+    },
+    "bash-single-qouted-strings": {
+      "name": "string.quoted.single.bash",
+      "begin": "'",
+      "end": "'"
+    },
+    "bash-double-qouted-strings": {
+      "name": "string.quoted.double.bash",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "name": "constant.character.escape.shell",
+          "match": "\\\\([\"`\\\\\\r\\n])"
+        }
+      ]
+    },
+    "bash-variables": {
+      "patterns": [
+        {
+          "name": "variable.other.shell",
+          "match": "(\\$)[a-zA-Z_][a-zA-Z0-9_]",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          }
+        },
+        {
+          "name": "variable.other.shell",
+          "begin": "\\$\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          }
+        },
+        {
+          "name": "variable.parameter.special.shell",
+          "match": "\\$(0-9@*#?$$!_])"
         }
       ]
     }
