@@ -523,6 +523,9 @@
         },
         {
           "include": "#bash-keywords"
+        },
+        {
+          "include": "#bash-args"
         }
       ]
     },
@@ -603,6 +606,15 @@
         {
           "name": "support.function.builtin.shell",
           "match": "\\b(echo|set|unset|export|readonly|shift|source|local|declare|getopts|read|let)\\b"
+        }
+      ]
+    },
+    "bash-args": {
+      "patterns": [
+        {
+          "name": "constant.other.option.shell",
+          "match": "(?<=^|\\s)(--[a-zA-Z0-9][a-zA-Z0-9-]*|-\\w+)\\b"
+
         }
       ]
     }
