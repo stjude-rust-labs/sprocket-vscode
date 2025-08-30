@@ -504,9 +504,6 @@
       "comment": "custom bash highlighting",
       "patterns": [
         {
-          "include": "#placeholder"
-        },
-        {
           "include": "#bash-comments"
         },
         {
