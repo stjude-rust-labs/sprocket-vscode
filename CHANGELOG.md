@@ -10,6 +10,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added bash textmate grammar rules.
 - Added comment wrapping document and preamble comments.
 
 ## 0.4.0 - 08-12-2025
