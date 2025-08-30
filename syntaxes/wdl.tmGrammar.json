@@ -182,9 +182,6 @@
       "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
-          "include": "#placeholder"
-        },
-        {
           "include": "#bash-in-wdl"
         }
       ]
@@ -208,9 +205,6 @@
       },
       "contentName": "source.shell.embedded.wdl",
       "patterns": [
-        {
-          "include": "#placeholder"
-        },
         {
           "include": "#bash-in-wdl"
         }
@@ -569,7 +563,7 @@
       "patterns": [
         {
           "name": "variable.other.shell",
-          "match": "(\\$)[a-zA-Z_][a-zA-Z0-9_]",
+          "match": "(\\$)[a-zA-Z_][a-zA-Z0-9_]*",
           "captures": {
             "1": {
               "name": "punctuation.definition.variable.shell"
@@ -593,7 +587,7 @@
         },
         {
           "name": "variable.parameter.special.shell",
-          "match": "\\$(0-9@*#?$$!_])"
+          "match": "\\$([0-9@*#?$$!_])"
         }
       ]
     },
@@ -614,7 +608,6 @@
         {
           "name": "constant.other.option.shell",
           "match": "(?<=^|\\s)(--[a-zA-Z0-9][a-zA-Z0-9-]*|-\\w+)\\b"
-
         }
       ]
     }
