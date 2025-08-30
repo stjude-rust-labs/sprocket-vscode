@@ -510,6 +510,9 @@
       "comment": "custom bash highlighting",
       "patterns": [
         {
+          "include": "#bash-heredocs"
+        },
+        {
           "include": "#bash-comments"
         },
         {
@@ -549,6 +552,62 @@
         },
         {
           "include": "#bash-double-quoted-strings"
+        }
+      ]
+    },
+    "bash-heredocs": {
+      "patterns": [
+        {
+          "include": "#bash-heredoc-python"
+        },
+        {
+          "include": "#bash-heredoc-generic"
+        }
+      ]
+    },
+    "bash-heredoc-python": {
+      "begin": "(<<-?)\\s*([pP][yY][tT][hH][oO][nN])",
+      "end": "^\\s*(\\2)\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.operator.heredoc.shell"
+        },
+        "2": {
+          "name": "entity.name.tag.heredoc.python.shell"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "entity.name.tag.heredoc.python.shell"
+        }
+      },
+      "contentName": "source.python.embedded.shell",
+      "patterns": [
+        {
+          "include": "source.python"
+        }
+      ]
+    },
+    "bash-heredoc-generic": {
+      "name": "string.unquoted.heredoc.shell",
+      "begin": "(<<-?)\\s*([a-zA-Z_][a-zA-Z0-9_]*)",
+      "end": "^\\s*(\\2)\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.operator.heredoc.shell"
+        },
+        "2": {
+          "name": "entity.name.tag.heredoc.shell"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "entity.name.tag.heredoc.shell"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#placeholder"
         }
       ]
     },
