@@ -584,6 +584,9 @@
       "contentName": "source.python.embedded.shell",
       "patterns": [
         {
+          "include": "#placeholder"
+        },
+        {
           "include": "source.python"
         }
       ]
