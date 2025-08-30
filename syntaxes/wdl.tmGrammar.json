@@ -179,10 +179,13 @@
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "string.command.template.shellscript",
+      "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
           "include": "#placeholder"
+        },
+        {
+          "include": "#bash-in-wdl"
         }
       ]
     },
@@ -203,10 +206,13 @@
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "string.command.template.shellscript",
+      "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
           "include": "#placeholder"
+        },
+        {
+          "include": "#bash-in-wdl"
         }
       ]
     },
@@ -497,6 +503,111 @@
         },
         {
           "include": "#identity"
+        }
+      ]
+    },
+    "bash-in-wdl": {
+      "comment": "custom bash highlighting",
+      "patterns": [
+        {
+          "include": "#bash-comments"
+        },
+        {
+          "include": "#bash-strings"
+        },
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "include": "#bash-keywords"
+        },
+        {
+          "include": "#bash-args"
+        }
+      ]
+    },
+    "bash-comments": {
+      "name": "comment.line.number-sign.shell",
+      "match": "#.*$"
+    },
+    "bash-strings": {
+      "patterns": [
+        {
+          "include": "#bash-single-quoted-strings"
+        },
+        {
+          "include": "#bash-double-quoted-strings"
+        }
+      ]
+    },
+    "bash-single-quoted-strings": {
+      "name": "string.quoted.single.shell",
+      "begin": "'",
+      "end": "'"
+    },
+    "bash-double-quoted-strings": {
+      "name": "string.quoted.double.shell",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "name": "constant.character.escape.shell",
+          "match": "\\\\([\"$`\\\\\\r\\n])"
+        }
+      ]
+    },
+    "bash-variables": {
+      "patterns": [
+        {
+          "name": "variable.other.shell",
+          "match": "(\\$)[a-zA-Z_][a-zA-Z0-9_]*",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          }
+        },
+        {
+          "name": "variable.other.shell",
+          "begin": "\\$\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          }
+        },
+        {
+          "name": "variable.parameter.special.shell",
+          "match": "\\$([0-9@*#?$$!_])"
+        }
+      ]
+    },
+    "bash-keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.shell",
+          "match": "\\b(if|then|else|fi|for|in|while|do|done|case|esac|until|select)\\b"
+        },
+        {
+          "name": "support.function.builtin.shell",
+          "match": "\\b(echo|set|unset|export|readonly|shift|source|local|declare|getopts|read|let)\\b"
+        }
+      ]
+    },
+    "bash-args": {
+      "patterns": [
+        {
+          "name": "constant.other.option.shell",
+          "match": "(?<=^|\\s)(--[a-zA-Z0-9][a-zA-Z0-9-]*|-\\w+)\\b"
         }
       ]
     }
