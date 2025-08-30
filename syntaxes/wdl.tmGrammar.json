@@ -182,6 +182,9 @@
       "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
+          "include": "#placeholder"
+        },
+        {
           "include": "#bash-in-wdl"
         }
       ]
@@ -205,6 +208,9 @@
       },
       "contentName": "source.shell.embedded.wdl",
       "patterns": [
+        {
+          "include": "#placeholder"
+        },
         {
           "include": "#bash-in-wdl"
         }
@@ -544,9 +550,6 @@
       "begin": "\"",
       "end": "\"",
       "patterns": [
-        {
-          "include": "#placeholder"
-        },
         {
           "include": "#bash-variables"
         },
