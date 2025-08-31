@@ -686,8 +686,8 @@
       ]
     },
     "bash-arguments": {
-        "name": "string.unquoted.argument.shell",
-        "match": "\\b[a-zA-Z0-9/._][a-zA-Z0-9/._-]*\\b"
+      "name": "string.unquoted.argument.shell",
+      "match": "\\b[a-zA-Z0-9/._][a-zA-Z0-9/._-]*\\b"
     },
     "bash-commands": {
       "patterns": [
