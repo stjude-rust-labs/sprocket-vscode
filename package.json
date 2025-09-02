@@ -91,6 +91,10 @@
           "sprocket.server.lint": {
             "type": "boolean",
             "markdownDescription": "Passes the `--lint` flag to `sprocket`; this enables additional linting checks that are not enabled by default."
+          },
+          "sprocket.server.analyzer.maxRetires": {
+            "type": "number",
+            "markdownDescription": "Number of times to retry restarting the `sprocket analyzer` if it fails to start."
           }
         }
       }
