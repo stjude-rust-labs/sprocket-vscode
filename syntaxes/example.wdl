@@ -201,3 +201,59 @@ workflow hello {
       AStruct some_other_struct = AStruct {}
    }
 }
+
+## Examples for testing embedded Bash syntax highlighting
+
+task basic_bash {
+  input {
+    String message = "world"
+  }
+
+  command <<<
+    # This is a comment.
+    set -euo pipefail
+
+    GREETING="Hello"
+    echo "$GREETING, ~{message}!"
+
+    if [[ -n "$GREETING" ]]; then
+      echo 'The greeting is not empty.'
+    fi
+  >>>
+}
+
+task arithmetic_test {
+  command <<<
+    i=0
+    while (( i < 5 )); do
+      echo "Count: $i"
+      (( i = i + 1 ))
+    done
+  >>>
+}
+
+task heredoc_test {
+  input {
+    String name = "WDL"
+  }
+
+  command <<<
+    # a generic heredoc
+    cat <<EOF
+    This is a generic block of text.
+    Hello, ~{name}!
+    EOF
+
+    # a python heredoc with WDL placeholders
+    python3 <<PYTHON
+    import sys
+
+    name = "~{name}"
+
+    def greet(person):
+        print(f"Hello from Python, {person}!")
+
+    greet(name)
+    PYTHON
+  >>>
+}

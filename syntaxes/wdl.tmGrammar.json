@@ -179,10 +179,13 @@
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "string.command.template.shellscript",
+      "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
           "include": "#placeholder"
+        },
+        {
+          "include": "#bash-in-wdl"
         }
       ]
     },
@@ -203,10 +206,13 @@
           "name": "punctuation.bracket.curly.command-end.wdl"
         }
       },
-      "contentName": "string.command.template.shellscript",
+      "contentName": "source.shell.embedded.wdl",
       "patterns": [
         {
           "include": "#placeholder"
+        },
+        {
+          "include": "#bash-in-wdl"
         }
       ]
     },
@@ -499,6 +505,253 @@
           "include": "#identity"
         }
       ]
+    },
+    "bash-in-wdl": {
+      "comment": "custom bash highlighting",
+      "patterns": [
+        {
+          "include": "#bash-heredocs"
+        },
+        {
+          "include": "#bash-comments"
+        },
+        {
+          "include": "#bash-strings"
+        },
+        {
+          "include": "#bash-arithmetic"
+        },
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "include": "#bash-assignments"
+        },
+        {
+          "include": "#bash-options"
+        },
+        {
+          "include": "#bash-keywords"
+        },
+        {
+          "include": "#bash-commands"
+        },
+        {
+          "include": "#bash-arguments"
+        }
+      ]
+    },
+    "bash-comments": {
+      "name": "comment.line.number-sign.shell",
+      "match": "#.*$"
+    },
+    "bash-strings": {
+      "patterns": [
+        {
+          "include": "#bash-single-quoted-strings"
+        },
+        {
+          "include": "#bash-double-quoted-strings"
+        }
+      ]
+    },
+    "bash-heredocs": {
+      "patterns": [
+        {
+          "include": "#bash-heredoc-python"
+        },
+        {
+          "include": "#bash-heredoc-generic"
+        }
+      ]
+    },
+    "bash-heredoc-python": {
+      "begin": "(<<-?)\\s*([pP][yY][tT][hH][oO][nN])",
+      "end": "^\\s*(\\2)\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.operator.heredoc.shell"
+        },
+        "2": {
+          "name": "entity.name.tag.heredoc.python.shell"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "entity.name.tag.heredoc.python.shell"
+        }
+      },
+      "contentName": "source.python.embedded.shell",
+      "patterns": [
+        {
+          "include": "#placeholder"
+        },
+        {
+          "include": "source.python"
+        }
+      ]
+    },
+    "bash-heredoc-generic": {
+      "name": "string.unquoted.heredoc.shell",
+      "begin": "(<<-?)\\s*([a-zA-Z_][a-zA-Z0-9_]*)",
+      "end": "^\\s*(\\2)\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.operator.heredoc.shell"
+        },
+        "2": {
+          "name": "entity.name.tag.heredoc.shell"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "entity.name.tag.heredoc.shell"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#placeholder"
+        }
+      ]
+    },
+    "bash-single-quoted-strings": {
+      "name": "string.quoted.single.shell",
+      "begin": "'",
+      "end": "'"
+    },
+    "bash-double-quoted-strings": {
+      "name": "string.quoted.double.shell",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "name": "constant.character.escape.shell",
+          "match": "\\\\([\"$`\\\\\\r\\n])"
+        }
+      ]
+    },
+    "bash-variables": {
+      "patterns": [
+        {
+          "name": "variable.other.shell",
+          "match": "(\\$)[a-zA-Z_][a-zA-Z0-9_]*",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          }
+        },
+        {
+          "name": "variable.other.shell",
+          "begin": "\\$\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.variable.shell"
+            }
+          }
+        },
+        {
+          "name": "variable.parameter.special.shell",
+          "match": "\\$([0-9@*#?$$!_])"
+        }
+      ]
+    },
+    "bash-keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.shell",
+          "match": "\\b(if|then|else|fi|for|in|while|do|done|case|esac|until|select)\\b"
+        },
+        {
+          "name": "support.function.builtin.shell",
+          "match": "\\b(echo|set|unset|export|readonly|shift|source|local|declare|getopts|read|let)\\b"
+        }
+      ]
+    },
+    "bash-options": {
+      "patterns": [
+        {
+          "name": "constant.other.option.shell",
+          "match": "(?<=^|\\s)(--[a-zA-Z0-9][a-zA-Z0-9-]*|-\\w+)\\b"
+        }
+      ]
+    },
+    "bash-arguments": {
+      "name": "string.unquoted.argument.shell",
+      "match": "\\b[a-zA-Z0-9/._][a-zA-Z0-9/._-]*\\b"
+    },
+    "bash-commands": {
+      "patterns": [
+        {
+          "name": "entity.name.function.shell",
+          "match": "(?<=^\\s*|;\\s*|&\\s*|\\|\\s*|\\(\\s*|`\\s*|do\\s+|then\\s+|else\\s+)\\b([a-zA-Z._/][a-zA-Z0-9_.-]*)\\b"
+        }
+      ]
+    },
+    "bash-assignments": {
+      "patterns": [
+        {
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(=)",
+          "captures": {
+            "1": {
+              "name": "variable.other.assignment.shell"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.shell"
+            }
+          }
+        }
+      ]
+    },
+    "bash-arithmetic": {
+      "name": "meta.expression.arithmetic.shell",
+      "begin": "(\\(\\()",
+      "end": "(\\)\\))",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.evaluation.begin.shell"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.evaluation.end.shell"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#bash-variables"
+        },
+        {
+          "include": "#bash-arithmetic-operators"
+        },
+        {
+          "include": "#bash-numeric"
+        },
+        {
+          "include": "#bash-arithmetic-variables"
+        }
+      ]
+    },
+    "bash-arithmetic-operators": {
+      "name": "keyword.operator.arithmetic.shell",
+      "match": "\\*\\*|==|!=|<=|>=|&&|\\|\\||<<|>>|[!~+\\-*/%<>&|^=]"
+    },
+    "bash-numeric": {
+      "name": "constant.numeric.shell",
+      "match": "\\b(0[xX][0-9a-fA-F]+|\\d+)\\b"
+    },
+    "bash-arithmetic-variables": {
+      "name": "variable.other.shell",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
     }
   },
   "fileTypes": ["wdl"],
