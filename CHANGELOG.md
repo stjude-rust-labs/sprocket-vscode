@@ -10,6 +10,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added option to configure maximum retries for restarting `analyzer`.
 - Added bash textmate grammar rules.
 - Added comment wrapping document and preamble comments.
 
