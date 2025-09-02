@@ -94,7 +94,8 @@
           },
           "sprocket.server.analyzer.maxRetires": {
             "type": "number",
-            "markdownDescription": "Number of times to retry restarting the `sprocket analyzer` if it fails to start."
+            "markdownDescription": "Number of times to retry restarting the `sprocket analyzer` if it fails to start.",
+            "default": 1
           }
         }
       }
