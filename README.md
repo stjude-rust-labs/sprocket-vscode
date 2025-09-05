@@ -15,7 +15,7 @@
     <br/>
     <a href="https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode"><strong>Download »</strong></a>
     ·
-    <a href="https://stjude-rust-labs.github.io/sprocket/vscode/getting-started.html"><strong>Read the Docs »</strong></a>
+    <a href="https://sprocket.bio/vscode/getting-started.html"><strong>Read the Docs »</strong></a>
     ·
     <a href="https://github.com/stjude-rust-labs/sprocket-vscode/issues/new?assignees=&labels=&template=feature_request.md&title=Descriptive%20Title&labels=enhancement"><strong>Request Feature »</strong></a>
     ·
@@ -24,36 +24,49 @@
   </p>
 </p>
 
-> [!NOTE]
->
-> The Sprocket Visual Studio Code extension is currently in very early
-> development. You may also experience various issues, such as
-> needing to manually restart the Sprocket extension if it crashes. We plan to
-> improve all of these things as we continue to develop the extension.
-
 ## 🏠 Overview
 
 This extension provides support developing bioinformatics workflows via the <a
 href="https://openwdl.org/">Workflow Description Language</a>. It does this by
 leveraging the [`sprocket`](https://github.com/stjude-rust-labs/sprocket)
-command line tool (and the [`wdl`](https://github.com/stjude-rust-labs/wdl) family of crates).
+command line tool (and the [`wdl`](https://github.com/stjude-rust-labs/wdl)
+family of crates).
 
 ## 📚 Getting Started
 
-To get started, follow the instructions outlined in [the documentation](https://stjude-rust-labs.github.io/sprocket/vscode/getting-started.html).
+To get started, follow the instructions outlined in [the
+documentation](https://sprocket.bio/vscode/getting-started.html).
 
 ## 🎨 Features
 
-- **Basic syntax highlighting** using a complete and up-to-date [TextMate
-  grammar](https://macromates.com/manual/en/language_grammars). _This grammar
-  is slated to drive GitHub's syntax highlighting for WDL files [in a future release](https://github.com/github-linguist/linguist/pull/6972)_.
-- **Document and workspace diagnostics from static analysis** courtesy of the
-  language server protocol implementation provided by `sprocket analyzer`.
+- **Syntax highlighting.** The extension uses both a complete [TextMate
+  grammar](https://macromates.com/manual/en/language_grammars) _and_ semantic
+  syntax highlighting via the LSP integration. Notably, this syntax highlighting
+  also drives GitHub's syntax highlighting of WDL.
+- **Document formatting.** Full formatting of documents using the underlying
+  `sprocket format` command is integrated such that it can be applied on-demand
+  or automatically on save/paste.
+- **Static analysis.** Static analysis of WDL documents is provided via the LSP
+  and is configurable for both validation and lint warnings.
+- **Code completion.** Various completions are available, including completion
+  of standard library functions and context-aware completion of variables.
+- **Hover support.** Hovering a variable or standard library function gives a
+  modal with documentation regarding that item.
+- **Go to definition.** Navigating from a symbol to its definition is supported
+  in all known contexts.
+- **Find all references.** Similarly, navigating from a symbol to all known
+  references is supported in all known contexts.
+- **Rename symbol.** Symbols may be seamlessly refactored and renamed using the
+  built-in VSCode shortcuts.
+- **Workspace and document symbols.** Symbols within WDL documents and symbols
+  are surfaced via your code editor's default facilities. This generally
+  includes an outline of symbols in a document and workspace-wide symbol search
+  at a minimum.
 - **Code snippets** for common WDL constructs and conventions.
 
-_**Note:** more features will be added as `sprocket` is developed. Please check
-out the activity on the [Sprocket repository](https://github.com/stjude-rust-labs/sprocket)
-to see what we're working on next!_
+All major functionality for the Sprocket VSCode extension has been completed. If
+you have things you want us to consider included, please [file an
+issue](https://github.com/stjude-rust-labs/sprocket-vscode/issues).
 
 ## Configuration
 
@@ -67,17 +80,12 @@ The extension provides the following configuration options:
   Valid values are `Verbose`, `Information`, and `Quiet`; defaults to `Quiet`.
 - `sprocket.server.lint`: Passes the `--lint` flag to `sprocket`; this enables
   additional linting checks that are not enabled by default.
+- `sprocket.server.maxRetries`: Sets the maximum number of retries before the
+  extension bails out.
 
 ## Known Issues
 
-- The extension is in an early stage of development and may not work as
-  expected.
-- When `sprocket` unexpectedly terminates, the extension does not automatically
-  restart it and you must manually restart the extension host to recover from
-  the error; this will change in the future as the extension becomes more
-  stable.
-- A number of popular LSP features, such as "Go To Definition", are not yet
-  implemented.
+_None at present._
 
 ## Development
 
@@ -85,7 +93,8 @@ The extension provides the following configuration options:
 
 To build the extension, Node.js, `npm`, and `yarn` must be installed.
 
-To install Node.js, follow [these instructions](https://nodejs.org/en/download/package-manager/current).
+To install Node.js, follow [these
+instructions](https://nodejs.org/en/download/package-manager/current).
 
 To install `yarn`, run the following command:
 
@@ -139,7 +148,8 @@ Then package the extension by running:
 vsce package --yarn
 ```
 
-This will generate a `sprocket-vscode-<version>.vsix` file that you can install in VS Code using the `Extensions: install from VSIX` command.
+This will generate a `sprocket-vscode-<version>.vsix` file that you can install
+in VS Code using the `Extensions: install from VSIX` command.
 
 ## 🤝 Contributing
 

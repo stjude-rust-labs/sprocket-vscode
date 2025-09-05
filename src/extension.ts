@@ -383,7 +383,7 @@ async function startServer() {
   const config = vscode.workspace.getConfiguration("sprocket.server");
   const outputLevel = config.get<string>("outputLevel") || "Quiet";
   const lint = config.get<boolean>("lint") || false;
-  const maxRetries = config.get<number>("analyzer.maxRetries") || 1;
+  const maxRetries = config.get<number>("maxRetries") || 1;
 
   let sprocketPath = await getSprocketPath(config);
   if (!sprocketPath) {
