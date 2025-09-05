@@ -383,6 +383,7 @@ async function startServer() {
   const config = vscode.workspace.getConfiguration("sprocket.server");
   const outputLevel = config.get<string>("outputLevel") || "Quiet";
   const lint = config.get<boolean>("lint") || false;
+  const maxRetries = config.get<number>("analyzer.maxRetries") || 1;
 
   let sprocketPath = await getSprocketPath(config);
   if (!sprocketPath) {
@@ -427,7 +428,7 @@ async function startServer() {
 
         // We will retry at least once if sprocket was initialized.
         crashReports++;
-        if (crashReports <= 1) {
+        if (crashReports <= maxRetries) {
           setStatus(Status.Working, "Sprocket has terminated. Restarting...");
           channel.appendLine("Attempting restart...");
           try {
