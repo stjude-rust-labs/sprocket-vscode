@@ -428,7 +428,7 @@ async function startServer() {
 
         // We will retry at least once if sprocket was initialized.
         crashReports++;
-        if (crashReports <= maxReties) {
+        if (crashReports <= maxRetries) {
           setStatus(Status.Working, "Sprocket has terminated. Restarting...");
           channel.appendLine("Attempting restart...");
           try {
