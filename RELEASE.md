@@ -15,6 +15,8 @@ Unreleased` section).
   - You can navigate to [the marketplace dashboard] to generate a personal
     access token when it asks for that.
 - [ ] Ensure that the update successfully pushes to [the public download page].
+- [ ] Go to the [Open VSX registry][open-vsx-registry] and upload the extension.
 
 [the marketplace dashboard]: https://marketplace.visualstudio.com/manage
 [the public download page]: https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode
+[open-vsx-registry]: https://open-vsx.org/user-settings/extensions
