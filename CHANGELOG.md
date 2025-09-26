@@ -8,6 +8,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 0.5.0 - 09-26-2025
+
 ### Added
 
 - Added option to configure maximum retries for restarting `analyzer`.
