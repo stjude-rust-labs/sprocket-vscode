@@ -46,6 +46,30 @@
       ]
     },
     {
+      "comment": "enums",
+      "begin": "(enum)\\s+([A-Za-z][A-Za-z0-9_]+)?",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.enum.wdl"
+        },
+        "2": {
+          "name": "variable.name.enum.wdl"
+        }
+      },
+      "contentName": "entity.enum.wdl",
+      "end": "({)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.bracket.curly.enum-start.wdl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#atom"
+        }
+      ]
+    },
+    {
       "comment": "tasks",
       "begin": "(task)\\s+([A-Za-z][A-Za-z0-9_]+)?",
       "beginCaptures": {
@@ -418,7 +442,7 @@
         },
         {
           "name": "keyword.wdl",
-          "match": "\\b(after|alias|as|call|command|else|env|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
+          "match": "\\b(after|alias|as|call|command|else|enum|env|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
         },
         {
           "name": "entity.name.type.wdl",
