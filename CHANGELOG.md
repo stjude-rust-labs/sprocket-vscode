@@ -8,6 +8,12 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## 0.6.0 - 01-13-2026
+
+### Added
+
+- Added `enum` keyword support to the TextMate grammar for WDL 1.3+.
+
 ## 0.5.0 - 09-26-2025
 
 ### Added
