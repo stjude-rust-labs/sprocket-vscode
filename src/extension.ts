@@ -4,6 +4,7 @@ import {
   LanguageClientOptions,
   ServerOptions,
   TransportKind,
+  DidChangeConfigurationNotification,
 } from "vscode-languageclient/node";
 import {
   ErrorAction,
@@ -302,9 +303,9 @@ async function installSprocket(
   return exePath;
 }
 
-async function getSprocketPath(
-  config: vscode.WorkspaceConfiguration,
-): Promise<string | undefined> {
+async function getSprocketPath(): Promise<string | undefined> {
+  const config = vscode.workspace.getConfiguration("sprocket.extension");
+
   let configExePath = config.get<string>("path") || "";
   if (configExePath.length > 0) {
     return configExePath;
@@ -381,11 +382,11 @@ async function startServer() {
   }
 
   const config = vscode.workspace.getConfiguration("sprocket.server");
-  const outputLevel = config.get<string>("outputLevel") || "Quiet";
+  const logLevel = config.get<string>("logLevel") || "Error";
   const lint = config.get<boolean>("lint") || false;
   const maxRetries = config.get<number>("maxRetries") || 1;
 
-  let sprocketPath = await getSprocketPath(config);
+  let sprocketPath = await getSprocketPath();
   if (!sprocketPath) {
     return;
   }
@@ -456,16 +457,23 @@ async function startServer() {
   };
 
   let args = ["analyzer"];
-  switch (outputLevel) {
-    case "Verbose":
+  switch (logLevel) {
+    case "Trace":
       args.push("-vvv");
       break;
 
-    case "Information":
+    case "Debug":
       args.push("-vv");
       break;
 
-    case "Quiet":
+    case "Info":
+      args.push("-v");
+      break;
+
+    case "Warn":
+      break;
+
+    case "Error":
       args.push("-q");
       break;
   }
@@ -534,9 +542,34 @@ export async function deactivate() {
 async function onDidChangeConfiguration(
   event: vscode.ConfigurationChangeEvent,
 ) {
-  if (event.affectsConfiguration("sprocket.server")) {
+  if (!client || !client.isRunning()) {
+    return;
+  }
+
+  if (event.affectsConfiguration("sprocket.extension.path")) {
     const userResponse = await vscode.window.showInformationMessage(
-      "Changing server options requires a Sprocket server restart",
+      "Changing the Sprocket executable path requires a server restart.",
+      "Restart now"
+    );
+
+    if (userResponse === "Restart now") {
+      await vscode.commands.executeCommand("sprocket.restartServer");
+    }
+
+    return;
+  }
+
+  if (!event.affectsConfiguration("sprocket.server")) {
+    return;
+  }
+
+  try {
+    await client.sendNotification(DidChangeConfigurationNotification.type, {
+      settings: {}
+    });
+  } catch (error) {
+    const userResponse = await vscode.window.showInformationMessage(
+      `Failed to send configuration update: ${error}`,
       "Restart now",
     );
 
