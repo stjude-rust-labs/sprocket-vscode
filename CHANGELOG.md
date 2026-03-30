@@ -8,6 +8,21 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Added
+
+- Added support for config reloading without server restarts ([#42](https://github.com/stjude-rust-labs/sprocket-vscode/pull/42)).
+- Added `Info`, `Warn`, and `Trace` log levels.
+
+### Changed
+
+- Renamed the following config keys:
+  - `sprocket.server.checkForUpdates` -> `sprocket.extension.checkForUpdates`
+  - `sprocket.server.maxRetries` -> `sprocket.extension.maxRetries`
+  - `sprocket.server.outputLevel` -> `sprocket.extension.logLevel`
+  - `sprocket.server.lint` -> `sprocket.extension.lint.enabled`
+- Renamed the `Quiet` log level to `Error`.
+- Renamed the `Information` log level to `Debug`.
+
 ## 0.6.0 - 01-13-2026
 
 ### Added
