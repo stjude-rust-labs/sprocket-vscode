@@ -304,7 +304,8 @@ async function installSprocket(
 }
 
 async function getSprocketPath(): Promise<string | undefined> {
-  const extensionConfig = vscode.workspace.getConfiguration("sprocket.extension");
+  const extensionConfig =
+    vscode.workspace.getConfiguration("sprocket.extension");
 
   let configExePath = extensionConfig.get<string>("path") || "";
   if (configExePath.length > 0) {
@@ -381,7 +382,8 @@ async function startServer() {
     return;
   }
 
-  const extensionConfig = vscode.workspace.getConfiguration("sprocket.extension");
+  const extensionConfig =
+    vscode.workspace.getConfiguration("sprocket.extension");
   const serverConfig = vscode.workspace.getConfiguration("sprocket.server");
 
   const logLevel = serverConfig.get<string>("logLevel") || "Error";
@@ -551,7 +553,7 @@ async function onDidChangeConfiguration(
   if (event.affectsConfiguration("sprocket.extension.path")) {
     const userResponse = await vscode.window.showInformationMessage(
       "Changing the Sprocket executable path requires a server restart.",
-      "Restart now"
+      "Restart now",
     );
 
     if (userResponse === "Restart now") {
@@ -567,7 +569,7 @@ async function onDidChangeConfiguration(
 
   try {
     await client.sendNotification(DidChangeConfigurationNotification.type, {
-      settings: {}
+      settings: {},
     });
   } catch (error) {
     const userResponse = await vscode.window.showInformationMessage(
