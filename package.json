@@ -106,13 +106,13 @@
     ]
   },
   "scripts": {
-    "compile": "yarn run check-types && node esbuild.js",
+    "compile": "pnpm run check-types && node esbuild.js",
     "check-types": "tsc --noEmit",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
-    "vscode:prepublish": "yarn run package",
-    "package": "yarn run check-types && node esbuild.js --production",
+    "vscode:prepublish": "pnpm run package",
+    "package": "pnpm run check-types && node esbuild.js --production",
     "format": "npx prettier . --write"
   },
   "extensionDependencies": [
@@ -121,23 +121,28 @@
   "dependencies": {
     "@microsoft/vscode-file-downloader-api": "^1.0.1",
     "extract-zip": "^2.0.1",
-    "node-fetch": "2",
-    "semver": "^7.6.3",
-    "tar": "^7.4.3",
+    "semver": "^7.7.4",
+    "tar": "^7.5.13",
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.7",
-    "@types/node": "20.x",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "~20.19.37",
     "@types/vscode": "^1.91.0",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.11.0",
-    "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.4.0",
-    "esbuild": "^0.24.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "typescript": "^5.4.5"
+    "@typescript-eslint/eslint-plugin": "^8.58.0",
+    "@typescript-eslint/parser": "^8.58.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.27.7",
+    "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "typescript": "^6.0.2"
   },
-  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
+  "packageManager": "pnpm@10.8.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }
