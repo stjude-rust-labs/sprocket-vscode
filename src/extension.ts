@@ -304,9 +304,9 @@ async function installSprocket(
 }
 
 async function getSprocketPath(): Promise<string | undefined> {
-  const config = vscode.workspace.getConfiguration("sprocket.extension");
+  const extensionConfig = vscode.workspace.getConfiguration("sprocket.extension");
 
-  let configExePath = config.get<string>("path") || "";
+  let configExePath = extensionConfig.get<string>("path") || "";
   if (configExePath.length > 0) {
     return configExePath;
   }
@@ -318,7 +318,7 @@ async function getSprocketPath(): Promise<string | undefined> {
       `Found previously installed Sprocket at \`${installed.path}\` (${installed.version})`,
     );
 
-    if (!config.get<boolean>("checkForUpdates")) {
+    if (!extensionConfig.get<boolean>("checkForUpdates")) {
       return installed.path;
     }
   }
@@ -381,10 +381,12 @@ async function startServer() {
     return;
   }
 
-  const config = vscode.workspace.getConfiguration("sprocket.server");
-  const logLevel = config.get<string>("logLevel") || "Error";
-  const lint = config.get<boolean>("lint") || false;
-  const maxRetries = config.get<number>("maxRetries") || 1;
+  const extensionConfig = vscode.workspace.getConfiguration("sprocket.extension");
+  const serverConfig = vscode.workspace.getConfiguration("sprocket.server");
+
+  const logLevel = serverConfig.get<string>("logLevel") || "Error";
+  const lint = serverConfig.get<boolean>("lint.enabled") || false;
+  const maxRetries = extensionConfig.get<number>("maxRetries") || 1;
 
   let sprocketPath = await getSprocketPath();
   if (!sprocketPath) {

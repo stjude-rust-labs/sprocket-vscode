@@ -18,8 +18,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Renamed the following config keys:
   - `sprocket.server.checkForUpdates` -> `sprocket.extension.checkForUpdates`
   - `sprocket.server.maxRetries` -> `sprocket.extension.maxRetries`
-  - `sprocket.server.outputLevel` -> `sprocket.extension.logLevel`
-  - `sprocket.server.lint` -> `sprocket.extension.lint.enabled`
+  - `sprocket.server.outputLevel` -> `sprocket.server.logLevel`
+  - `sprocket.server.lint` -> `sprocket.server.lint.enabled`
 - Renamed the `Quiet` log level to `Error`.
 - Renamed the `Information` log level to `Debug`.
 
