@@ -12,7 +12,7 @@
   "engines": {
     "vscode": "^1.91.0"
   },
-  "license": "SEE LICENSE IN LICENSE-APACHE",
+  "license": "(MIT OR Apache-2.0)",
   "categories": [
     "Programming Languages",
     "Linters"
@@ -64,38 +64,42 @@
       {
         "title": "Sprocket",
         "properties": {
-          "sprocket.server.checkForUpdates": {
+          "sprocket.extension.checkForUpdates": {
             "type": "boolean",
             "markdownDescription": "Whether or not to check for updates to the latest stable Sprocket release when the extension starts.",
             "default": true
           },
-          "sprocket.server.path": {
-            "type": "string",
-            "markdownDescription": "The path to a locally installed Sprocket; defaults to automatically installing the latest stable Sprocket."
-          },
-          "sprocket.server.outputLevel": {
-            "type": "string",
-            "markdownDescription": "Manages the output level of the Sprocket server",
-            "default": "Quiet",
-            "enum": [
-              "Verbose",
-              "Information",
-              "Quiet"
-            ],
-            "enumDescriptions": [
-              "The server will output all available information.",
-              "The server will output informational messages.",
-              "The server will only output error messages."
-            ]
-          },
-          "sprocket.server.lint": {
-            "type": "boolean",
-            "markdownDescription": "Passes the `--lint` flag to `sprocket`; this enables additional linting checks that are not enabled by default."
-          },
-          "sprocket.server.maxRetries": {
+          "sprocket.extension.maxRetries": {
             "type": "number",
             "markdownDescription": "Number of times to retry restarting the `sprocket analyzer` if it fails to start.",
             "default": 1
+          },
+          "sprocket.extension.path": {
+            "type": "string",
+            "markdownDescription": "The path to a locally installed Sprocket; defaults to automatically installing the latest stable Sprocket."
+          },
+          "sprocket.server.logLevel": {
+            "type": "string",
+            "markdownDescription": "Manages the output level of the Sprocket server",
+            "default": "Error",
+            "enum": [
+              "Trace",
+              "Debug",
+              "Info",
+              "Warn",
+              "Error"
+            ],
+            "enumDescriptions": [
+              "The server will output all available information.",
+              "The server will output debugging information.",
+              "The server will output extra informational messages.",
+              "The server will output warning messages.",
+              "The server will only output error messages."
+            ]
+          },
+          "sprocket.server.lint.enabled": {
+            "type": "boolean",
+            "markdownDescription": "Passes the `--lint` flag to `sprocket`; this enables additional linting checks that are not enabled by default."
           }
         }
       }
