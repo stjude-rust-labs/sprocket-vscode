@@ -49,7 +49,7 @@
         "scopeName": "source.wdl",
         "path": "./syntaxes/wdl.tmGrammar.json",
         "embeddedLanguages": {
-          "meta.embedded.block.shellscript": "shellscript"
+          "source.shell.embedded.wdl": "shellscript"
         }
       }
     ],
