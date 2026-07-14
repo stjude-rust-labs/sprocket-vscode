@@ -58,6 +58,11 @@
         "command": "sprocket.restartServer",
         "title": "Restart Server",
         "category": "Sprocket"
+      },
+      {
+        "command": "sprocket.run",
+        "title": "Run `sprocket run`",
+        "category": "Sprocket"
       }
     ],
     "configuration": [

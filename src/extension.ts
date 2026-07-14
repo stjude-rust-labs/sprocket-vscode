@@ -83,16 +83,61 @@ export async function activate(ctx: vscode.ExtensionContext) {
   });
 }
 
+interface TerminalCommand {
+  terminalName: string;
+  command: string;
+}
+
 function registerCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("sprocket.showChannel", (_) => {
       channel.show();
     }),
   );
-
   context.subscriptions.push(
     vscode.commands.registerCommand("sprocket.restartServer", restartServer),
   );
+
+  const runCommand = vscode.commands.registerCommand(
+    "sprocket.run",
+    async (wdlPath: string, target: string) => {
+      if (!wdlPath || !target) {
+        vscode.window.showErrorMessage("Invalid Sprocket run arguments");
+        return;
+      }
+
+      await runCommandInTerminal((sprocketPath) => {
+        return {
+          terminalName: `Sprocket Run: ${target}`,
+          command: `"${sprocketPath}" run -t "${target}" "${wdlPath}"`,
+        };
+      });
+    },
+  );
+  context.subscriptions.push(runCommand);
+}
+
+async function runCommandInTerminal(
+  generator: (sprocketPath: string) => TerminalCommand,
+) {
+  const sprocketPath = await getSprocketPath();
+  if (!sprocketPath) {
+    vscode.window.showErrorMessage(
+      "Sprocket executable path could not be resolved",
+    );
+    return;
+  }
+
+  const cmd = generator(sprocketPath);
+  let terminal = vscode.window.terminals.find(
+    (t) => t.name === cmd.terminalName,
+  );
+  if (!terminal) {
+    terminal = vscode.window.createTerminal({ name: cmd.terminalName });
+  }
+
+  terminal.show(true);
+  terminal.sendText(cmd.command);
 }
 
 async function stopServer() {
@@ -205,7 +250,6 @@ async function getLatestVersion(): Promise<string | undefined> {
     name: string;
     max_stable_version: string;
   }
-
   interface Response {
     crates: Crate[];
   }
