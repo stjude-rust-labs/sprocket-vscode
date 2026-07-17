@@ -22,7 +22,7 @@ const semver = require("semver");
 
 let context: vscode.ExtensionContext | undefined;
 let client: LanguageClient | undefined;
-let channel: vscode.OutputChannel;
+let channel: vscode.LogOutputChannel;
 let statusBar: vscode.StatusBarItem;
 let initializationError: ResponseError<InitializeError> | undefined = undefined;
 let crashReports = 0;
@@ -521,7 +521,7 @@ async function restartServer() {
 }
 
 async function tryActivate(context: vscode.ExtensionContext) {
-  channel = vscode.window.createOutputChannel("Sprocket");
+  channel = vscode.window.createOutputChannel("Sprocket", { log: true });
   context.subscriptions.push(channel);
   channel.appendLine("Sprocket extension is initializing...");
 

@@ -14,7 +14,13 @@ Unreleased` section).
 - [ ] Run `pnpm exec vsce publish --no-dependencies` from the root directory to publish the package.
   - If your Personal Access Token (PAT) has expired, see the instructions below.
 - [ ] Ensure that the update successfully pushes to [the public download page].
-- [ ] Go to the [Open VSX registry][open-vsx-registry] and upload the extension.
+- [ ] Ensure that the [Open VSX publishing workflow] succeeds and the new version
+      appears in the [Open VSX registry].
+
+The Open VSX publishing workflow runs when a GitHub release is published. It
+packages the tagged source and publishes it using the `OVSX_PAT` GitHub Actions
+secret. Create a dedicated token on the [Open VSX access tokens page] and update
+the repository secret whenever that token is rotated.
 
 ## Creating a Personal Access Token (PAT)
 
@@ -32,4 +38,6 @@ DevOps:
 5. Run `pnpm exec vsce login stjude-rust-labs` and paste the token when prompted.
 
 [the public download page]: https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode
-[open-vsx-registry]: https://open-vsx.org/user-settings/extensions
+[open-vsx-access-tokens-page]: https://open-vsx.org/user-settings/tokens
+[open-vsx-publishing-workflow]: .github/workflows/publish-open-vsx.yml
+[open-vsx-registry]: https://open-vsx.org/extension/stjude-rust-labs/sprocket-vscode
