@@ -31,7 +31,7 @@ DevOps:
    - **Scopes**: Custom defined → Show all scopes → **Marketplace** → check **Manage**
 4. Click **Create** and copy the token immediately (you won't see it again).
 5. Run `pnpm exec vsce login stjude-rust-labs` and paste the token when prompted.
-   [the public download page]: https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode
-   [the public download page]: https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode
-   [open-vsx-publishing-workflow]: .github/workflows/publish-open-vsx.yml
-   [open-vsx-registry]: https://open-vsx.org/extension/stjude-rust-labs/sprocket-vscode
+
+[the public download page]: https://marketplace.visualstudio.com/items?itemName=stjude-rust-labs.sprocket-vscode
+[open-vsx-publishing-workflow]: .github/workflows/publish-open-vsx.yml
+[open-vsx-registry]: https://open-vsx.org/extension/stjude-rust-labs/sprocket-vscode
