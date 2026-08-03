@@ -8,6 +8,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Fixed doc comment matching in the WDL TextMate grammar ([#43](https://github.com/stjude-rust-labs/sprocket-vscode/pull/43)).
+- Fixed shell code highlighting in the WDL TextMate grammar ([#43](https://github.com/stjude-rust-labs/sprocket-vscode/pull/43)).
+
 ## 0.7.0 - 04-02-2026
 
 ### Added

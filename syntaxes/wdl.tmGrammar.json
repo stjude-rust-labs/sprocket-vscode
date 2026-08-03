@@ -1,12 +1,21 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "wdl",
+  "injections": {
+    "L:source.shell.embedded.wdl": {
+      "patterns": [
+        {
+          "include": "#placeholder"
+        }
+      ]
+    }
+  },
   "patterns": [
     {
-      "include": "#single-number-sign-comments"
+      "include": "#double-number-sign-comments"
     },
     {
-      "include": "#double-number-sign-comments"
+      "include": "#single-number-sign-comments"
     },
     {
       "comment": "version",
@@ -148,22 +157,31 @@
     }
   ],
   "repository": {
-    "single-number-sign-comments": {
-      "comment": "single number sign comments",
-      "name": "comment.line.number-sign.documentation",
-      "begin": "(?:\\s*)(?:#(?!#))",
-      "while": "(?:^|\\G)(?:\\s*)(?:#(?!#))"
-    },
     "double-number-sign-comments": {
       "comment": "double number sign comments",
-      "name": "comment.line.double-number-sign.documentation",
-      "begin": "(?:\\s*)(?:##) ?",
-      "while": "(?:^|\\G)\\s*(?:##) ?",
+      "begin": "^(\\s*)(##)",
+      "beginCaptures": {
+        "2": {
+          "name": "comment.line.double-number-sign.documentation"
+        }
+      },
+      "while": "^(\\s*)(##)",
+      "whileCaptures": {
+        "2": {
+          "name": "comment.line.double-number-sign.documentation"
+        }
+      },
       "patterns": [
         {
           "include": "text.html.markdown"
         }
       ]
+    },
+    "single-number-sign-comments": {
+      "comment": "single number sign comments",
+      "name": "comment.line.number-sign.documentation",
+      "begin": "(?:\\s*)(?:#(?!#))",
+      "while": "(?:^|\\G)(?:\\s*)(?:#(?!#))"
     },
     "input-block": {
       "comment": "`input` blocks",
@@ -210,6 +228,9 @@
         },
         {
           "include": "#bash-in-wdl"
+        },
+        {
+          "include": "source.shell"
         }
       ]
     },
@@ -237,6 +258,9 @@
         },
         {
           "include": "#bash-in-wdl"
+        },
+        {
+          "include": "source.shell"
         }
       ]
     },
