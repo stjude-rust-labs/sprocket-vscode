@@ -22,6 +22,15 @@
       }
     },
     {
+      "comment": "imports",
+      "match": "(?<!\\.)\\b(import)\\b(?=\\s*(?:\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'\\\\]|\\\\.)*'))",
+      "captures": {
+        "1": {
+          "name": "keyword.other.import.wdl"
+        }
+      }
+    },
+    {
       "comment": "structs",
       "begin": "(struct)\\s+([A-Za-z][A-Za-z0-9_]+)?",
       "beginCaptures": {
@@ -422,7 +431,7 @@
       "patterns": [
         {
           "name": "keyword.other.wdl",
-          "match": "\\b(import|version)\\b"
+          "match": "\\b(version)\\b"
         },
         {
           "name": "storage.modifier.wdl",
@@ -442,7 +451,7 @@
         },
         {
           "name": "keyword.wdl",
-          "match": "\\b(after|alias|as|call|command|else|enum|env|false|hints|if|in|import|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
+          "match": "\\b(after|alias|as|call|command|else|enum|env|false|hints|if|in|input|meta|null|object|output|parameter_meta|requirements|runtime|scatter|then|true|version)\\b\\s*(?!:)"
         },
         {
           "name": "entity.name.type.wdl",
